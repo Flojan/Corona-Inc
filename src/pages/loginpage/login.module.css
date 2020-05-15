@@ -2,3 +2,33 @@ body {
   background-image: url("virusbackground.png");
   background-size: cover;
 }
+
+.loginbackground {
+  width: 600px;
+  height: 300px;
+  background: grey;
+}
+
+.login {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+}
+
+.register {
+  position: absolute;
+  top: 80%;
+  left: 40%;
+}
+
+.email {
+  position: absolute;
+  top: 80%;
+  left: 40%;
+}
+
+.passwort {
+  position: absolute;
+  top: 80%;
+  left: 40%;
+}

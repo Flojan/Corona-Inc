@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../components/Button";
 import styles from "./login.module.css";
+import TextInput from "../../components/TextInput";
 
 class login {
   /*
@@ -11,24 +12,24 @@ class login {
 
   render() {
     return (
-      <div>
+      <div className={styles.loginbackground}>
         <form>
-          <input
+          <TextInput
             type="email"
             id="email"
-            name="email"
-            placeholder="DaniWiese@example.com"
-            required
-          />
-          <input
+            placeholder="hans.peter@example.de"
+          ></TextInput>
+          <TextInput
             type="password"
             id="password"
-            name="password"
-            placeholder="Your Password"
-            required
-          />
-          <Button>Login</Button>
-          <Button>Register</Button>
+            placeholder="Passwort"
+          ></TextInput>
+          <div className={styles.register}>
+            <Button>Register</Button>
+          </div>
+          <div className={styles.login}>
+            <Button>Login</Button>
+          </div>
         </form>
       </div>
     );
@@ -36,3 +37,9 @@ class login {
 }
 
 export default login;
+
+/*const login = ({ children }) => (
+  <button className={styles.button}>{children}</button> //props.children
+);
+
+export default Login;*/
