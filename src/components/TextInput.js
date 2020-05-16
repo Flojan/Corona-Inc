@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "./TextInput.module.css";
+import styles from "./../css/TextInput.css";
 
 const TextInput = ({ type, id, placeholder }) => (
   <input
     type={type}
-    id={"email"}
+    id={id}
     placeholder={placeholder}
     className={styles.input}
   />

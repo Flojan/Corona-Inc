@@ -1,0 +1,37 @@
+.loginform {
+  position: absolute;
+  width: 600px;
+  height: 400px;
+  background-color: #252525de;
+  left: 50%;
+  top: 50%;
+  margin-top: -200px;
+  margin-left: -300px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.loginform h1 {
+  color: #fff;
+}
+form {
+  margin: 40px 0 40px 0px;
+}
+.loginformBtns {
+  margin-top: 20px;
+}
+#loginBtn {
+  margin-left: 10px;
+}
+#registerBtn {
+  margin-right: 10px;
+}
+#email,
+#password {
+  background: #f2f2f2;
+  outline: 0;
+  border: 0;
+  width: 50%;
+  margin: 15px 0px 15px 0px;
+  padding: 15px 0px 15px 20px;
+  font-size: 14px;
+}
