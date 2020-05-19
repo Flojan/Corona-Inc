@@ -1,8 +1,20 @@
 import React from "react";
-import styles from "./../css/Button.css";
+import styled from "styled-components";
+
+export const StyledButton = styled.button`
+  background-color: red;
+  color: black;
+  border: none;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 16px;
+  width: 155px;
+`;
 
 const Button = ({ id, children }) => (
-  <button id={id}>{children}</button> //props.children
+  <StyledButton id={id}>{children}</StyledButton> //props.children
 );
 
 export default Button;
+
+// react router - page forwarding
