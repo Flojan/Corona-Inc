@@ -11,8 +11,8 @@ export const StyledButton = styled.button`
   width: 155px;
 `;
 
-const Button = ({ id, children }) => (
-  <StyledButton id={id}>{children}</StyledButton> //props.children
+const Button = ({ id, children , onClick = () => {}}) => (
+  <StyledButton id={id} onClick={onClick}>{children}</StyledButton> //props.children
 );
 
 export default Button;
