@@ -4,21 +4,19 @@ import "./index.css";
 import Login from "./pages/Login";
 import Game from "./pages/Game";
 import * as serviceWorker from "./serviceWorker";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
+      <Redirect from="/" to="/login" />
       <Switch>
         <Route path="/login">
-          <Login/>
+          <Login />
         </Route>
         <Route path="/game">
-          <Game/>
+          <Game />
         </Route>
       </Switch>
     </Router>

@@ -9,10 +9,16 @@ export const StyledButton = styled.button`
   text-align: center;
   font-size: 16px;
   width: 155px;
+  margin: 5px;
+  &:hover {
+    background: white;
+  }
 `;
 
-const Button = ({ id, children , onClick = () => {}}) => (
-  <StyledButton id={id} onClick={onClick}>{children}</StyledButton> //props.children
+const Button = ({ id, children, onClick = () => {} }) => (
+  <StyledButton id={id} onClick={onClick}>
+    {children}
+  </StyledButton> //props.children
 );
 
 export default Button;
