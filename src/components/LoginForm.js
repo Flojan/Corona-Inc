@@ -21,8 +21,6 @@ export const ButtonContainer = styled.div`
 `;
 
 
-
-
 const LoginForm = () => {
   /**
    * Erstellen der States. Damit Mail und PW gesetzt werden können und innerhalb von LoginForm
@@ -32,6 +30,7 @@ const LoginForm = () => {
   const [password, setPw] = useState('1234')
   let history = useHistory()
   
+  
   //Methode um der Click auf Register zu behandeln
   const onRegisterClick = (event) => {
     console.log("Register geklickt")
@@ -40,14 +39,43 @@ const LoginForm = () => {
      * Auf Tipp von Max statt <Link> um die Buttons zu machen(was nicht so super funktioniert hat)
      * https://reacttraining.com/react-router/web/api/Hooks/usehistory
      */
+    sendRegister(email, password)
     history.push("/game")
   }
 
-  //Mathoe um den Login Click zu handeln
+  //Methode um den Login Click zu handeln
   const onLoginClick = (event) => {
     console.log("Login geklickt")
     event.preventDefault() //Damit die Seite geladen wird nach dem Klick
+    sendLogin(email, password)
     history.push("/game")
+  }
+
+  const sendRegister = async (email, password) => {
+    const response = await fetch("http://server.bykovski.de:8000/users/register", {
+      method: 'POST',
+      body: JSON.stringify({"username": email, "password": password})
+      });
+    console.log("Response Register")
+    console.log(await response.json())
+  }
+
+  const sendLogin = async(email, password) => {
+    let details = { "username": email, "password": password }
+    let formBody = []
+    for (let prop in details) {
+      let encodedKey = encodeURIComponent(prop)
+      let encodedValue = encodeURIComponent(details[prop])
+      formBody.push(encodedKey + "=" + encodedValue)
+    }
+    formBody = formBody.join("&")
+    const response = await fetch("http://server.bykovski.de:8000/users/token", {
+      method: 'POST', 
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body: formBody, 
+    });
+    console.log("Response Login")
+    console.log(await response.json())
   }
 
   return (
