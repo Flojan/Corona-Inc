@@ -29,7 +29,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState('def@default.com')
   const [password, setPw] = useState('1234')
   let history = useHistory()
-  
+  const StatusCodeSuccessful = 200
   
   //Methode um der Click auf Register zu behandeln
   const onRegisterClick = (event) => {
@@ -40,7 +40,6 @@ const LoginForm = () => {
      * https://reacttraining.com/react-router/web/api/Hooks/usehistory
      */
     sendRegister(email, password)
-    history.push("/game")
   }
 
   //Methode um den Login Click zu handeln
@@ -48,7 +47,6 @@ const LoginForm = () => {
     console.log("Login geklickt")
     event.preventDefault() //Damit die Seite geladen wird nach dem Klick
     sendLogin(email, password)
-    history.push("/game")
   }
 
   const sendRegister = async (email, password) => {
@@ -56,8 +54,12 @@ const LoginForm = () => {
       method: 'POST',
       body: JSON.stringify({"username": email, "password": password})
       });
-    console.log("Response Register")
-    console.log(await response.json())
+    //console.log(await response.json())
+    if(response.status === StatusCodeSuccessful) {
+      history.push("/game")
+    } else {
+      //alert.show('Alert alert')
+    }
   }
 
   const sendLogin = async(email, password) => {
@@ -74,8 +76,10 @@ const LoginForm = () => {
       headers: {"Content-Type": "application/x-www-form-urlencoded"},
       body: formBody, 
     });
-    console.log("Response Login")
-    console.log(await response.json())
+    //console.log(await response.json())
+    if(response.status === StatusCodeSuccessful) {
+      history.push("/game")
+    }
   }
 
   return (

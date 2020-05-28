@@ -22,5 +22,3 @@ const Button = ({ id, children, onClick = () => {} }) => (
 );
 
 export default Button;
-
-// react router - page forwarding
