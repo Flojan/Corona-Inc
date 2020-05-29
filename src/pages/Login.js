@@ -8,6 +8,9 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background-size: cover;
+  left: 0px;
+  top: 0px;
+  position: fixed;
 `;
 
 export const FormContainer = styled.div`
@@ -23,8 +26,7 @@ export const FormContainer = styled.div`
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 `;
 
-
-// File kann man raus kicken weil hier nicht viel passieren wird. 
+// File kann man raus kicken weil hier nicht viel passieren wird.
 const Login = () => {
   return (
     <Container>
