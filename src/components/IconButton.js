@@ -4,8 +4,8 @@ import backgroundImage from "../images/greybackground.png";
 import icon from "../images/diseaseicon.png";
 
 export const StyledIconButton = styled.button`
-  background-image: url(${backgroundImage});
-  /* color: white; */
+  /* background-image: url(${backgroundImage}); */
+  color: white; 
   position: relative;
   width: 450px;
   height: 60px;
@@ -26,6 +26,12 @@ const Button = ({ id, children, onClick }) => (
   <StyledIconButton id={id} onClick={onClick}>
     {children}
     <IconImage src={icon} />
+    <div>
+      Hello <br></br> 100
+    </div>
+    <div align="right">
+      Test <br></br> 100
+    </div>
   </StyledIconButton>
 );
 
