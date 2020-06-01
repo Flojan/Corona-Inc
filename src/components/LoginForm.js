@@ -27,6 +27,7 @@ const LoginForm = () => {
    */
   const [email, setEmail] = useState("def@default.com");
   const [password, setPw] = useState("1234");
+  let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
 
@@ -80,6 +81,10 @@ const LoginForm = () => {
     });
     //console.log(await response.json())
     if (response.status === StatusCodeSuccessful) {
+      actJWT = await response.json();
+      actJWT = actJWT.access_token;
+      sessionStorage.setItem("token", actJWT);
+      console.log(sessionStorage.getItem("token"));
       history.push("/game");
     }
   };

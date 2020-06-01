@@ -28,6 +28,7 @@ export const FormContainer = styled.div`
 
 // File kann man raus kicken weil hier nicht viel passieren wird.
 const Login = () => {
+  sessionStorage.removeItem("token");
   return (
     <Container>
       <FormContainer>
