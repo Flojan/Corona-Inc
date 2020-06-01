@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../components/Button";
 import HitArea from "../components/HitArea";
+import IconButton from "../components/IconButton";
 //import List from "../components/List";
 
 const Game = () => {
@@ -19,6 +20,7 @@ const Game = () => {
       <h4>Generatoren</h4>
       <Button onClick={GeneratorOne}>Level 1</Button>
       <HitArea></HitArea>
+      <IconButton></IconButton>
     </div>
   );
 };

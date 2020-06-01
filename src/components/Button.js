@@ -15,10 +15,10 @@ export const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ id, children, onClick = () => {} }) => (
+const Button = ({ id, children, onClick }) => (
   <StyledButton id={id} onClick={onClick}>
     {children}
-  </StyledButton> //props.children
+  </StyledButton>
 );
 
 export default Button;
