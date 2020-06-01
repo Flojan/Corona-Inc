@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Redirect from="/" to="/login" />
+      <Redirect from="/" to="/game" />
       <Switch>
         <Route path="/login">
           <Login />
