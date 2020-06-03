@@ -3,6 +3,7 @@ import Button from "./Button";
 import TextInput from "./TextInput";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import Useralert from "./Useralert";
 
 export const StyledForm = styled.form`
   h1 {
@@ -12,6 +13,9 @@ export const StyledForm = styled.form`
     color: #fff;
   }
   margin: 40px 0 40px 0px;
+  Useralert {
+    color: white;
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -27,6 +31,8 @@ const LoginForm = () => {
    */
   const [email, setEmail] = useState("def@default.com");
   const [password, setPw] = useState("1234");
+  const [alertType, setAlertType] = useState(false);
+  const [infoAlert, setInfoAlert] = useState("Info");
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
@@ -59,9 +65,12 @@ const LoginForm = () => {
     );
     //console.log(await response.json())
     if (response.status === StatusCodeSuccessful) {
+      setAlertType(true);
+      setInfoAlert("Register successful");
       history.push("/game");
     } else {
-      //alert.show('Alert alert')
+      setInfoAlert("Register failed");
+      setAlertType(false);
     }
   };
 
@@ -81,11 +90,16 @@ const LoginForm = () => {
     });
     //console.log(await response.json())
     if (response.status === StatusCodeSuccessful) {
+      setAlertType(true);
+      setInfoAlert("Login successsful");
       actJWT = await response.json();
       actJWT = actJWT.access_token;
       sessionStorage.setItem("token", actJWT);
       console.log(sessionStorage.getItem("token"));
       history.push("/game");
+    } else {
+        setAlertType(true);
+        setInfoAlert("Login faild");
     }
   };
 
@@ -109,6 +123,10 @@ const LoginForm = () => {
         <Button onClick={onRegisterClick}>Register</Button>
         <Button onClick={onLoginClick}>Login</Button>
       </ButtonContainer>
+      <Useralert type={alertType}
+                 info={infoAlert} 
+                 >
+      </Useralert>
     </StyledForm>
   );
 };

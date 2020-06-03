@@ -1,19 +1,21 @@
 import React from "react";
-import { Provider as AlertProvider } from "react-alert";
-import AlertTemplate from 'react-alert-template-basic';
-import { render } from "@testing-library/react";
+import styled from "styled-components";
 
-const options = {
-    position : 'bottom center',
-    timeout: 5000,
-    offset: '30px', 
-    transitions: 'scale'
-}
+export const StyledUseralert = styled.div`
+    background-color: ${props => props.type === true ? '#D6130D' : 'blue'};
+    display: ${props => props.display === true ? 'block': 'none'};
+    border: none;
+    color: white;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 1px;
+`;
 
-const Useralert = () => (
-    <AlertProvider template={AlertTemplate}>
-        <index />
-    </AlertProvider>
-)
 
-render(<Useralert />, document.getElementById('useralert'));
+const Useralert = ({type, info}) => ( 
+    <StyledUseralert type={type} display={type} info={info}>
+        <p>{info}</p>
+    </StyledUseralert>
+);
+
+export default Useralert;
