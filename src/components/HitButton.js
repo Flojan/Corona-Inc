@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import backgroundImage from "../images/virusimage.png";
 
 export const StyledButton = styled.button`
-  background-color: #ff0000;
-  color: black;
+  /* background-color: #ff0000; */
+  background-image: url(${backgroundImage});
+  background-position: center;
+  background-size: 200px;
   border: none;
-  padding: 15px 30px;
   text-align: center;
   font-size: 16px;
   width: 200px;
   height: 200px;
   margin: 5px;
   border-radius: 50%;
-  &:hover {
-    background: #ff4040;
-  }
 `;
 
 const HitButton = ({ id, children, onClick = () => {} }) => (
