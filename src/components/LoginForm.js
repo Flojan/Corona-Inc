@@ -90,22 +90,18 @@ const LoginForm = () => {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: formBody,
     });
-    //console.log(await response.json())
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Login successsful");
       //Token
       actJWT = await response.json();
       actJWT = actJWT.access_token;
-      setToken(actJWT);
-      //sessionStorage.setItem("token", actJWT);
-      //console.log(sessionStorage.getItem("token"));
-
+      setToken(actJWT); // Setzen des Usertokens
       getCurrentGenerators();
       history.push("/game");
     } else {
         setAlertType(true);
-        setInfoAlert("Login faild");
+        setInfoAlert("Login failed");
     }
   };
 

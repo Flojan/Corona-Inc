@@ -68,9 +68,9 @@ const Game = () => {
       <MenuBar></MenuBar>
       <GeneratorContainer>
         <StyledHeadlines>Generators</StyledHeadlines>
+        <IconButton text="Erkältung"></IconButton>
+        <IconButton text="Grippe"></IconButton>
         <IconButton text="Lungenentzündung"></IconButton>
-        <IconButton text="Herzinfarkt"></IconButton>
-        <IconButton text="Herzinfarkt"></IconButton>
         <IconButton text="Herzinfarkt"></IconButton>
         <IconButton text="Herzinfarkt"></IconButton>
       </GeneratorContainer>
