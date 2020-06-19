@@ -68,19 +68,19 @@ const Game = () => {
       <MenuBar></MenuBar>
       <GeneratorContainer>
         <StyledHeadlines>Generators</StyledHeadlines>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
+        <IconButton text="Lungenentzündung"></IconButton>
+        <IconButton text="Herzinfarkt"></IconButton>
+        <IconButton text="Herzinfarkt"></IconButton>
+        <IconButton text="Herzinfarkt"></IconButton>
+        <IconButton text="Herzinfarkt"></IconButton>
       </GeneratorContainer>
       <UpgradesContainer>
         <StyledHeadlines>Upgrades</StyledHeadlines>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
-        <IconButton></IconButton>
+        <IconButton text="Husten"></IconButton>
+        <IconButton text="Niesen"></IconButton>
+        <IconButton text="Kotzen"></IconButton>
+        <IconButton text="Kacken"></IconButton>
+        <IconButton text="Pissen"></IconButton>
       </UpgradesContainer>
       <ClickerContainer>
         <HitArea></HitArea>

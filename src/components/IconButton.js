@@ -28,7 +28,7 @@ export const IconImage = styled.img`
   height: 45px;
 `;
 
-const Button = () => {
+const IconButton = ({ text }) => {
   const [count, setCount] = useState(0);
   const click = 1;
 
@@ -40,7 +40,7 @@ const Button = () => {
     <StyledIconButton onClick={onHitClick}>
       <IconImage src={icon} />
       <StyledDiv>
-        <span>Lungenentzündung</span>
+        <span>{text}</span>
         <span>15</span>
       </StyledDiv>
       <StyledDiv> Clicks: {count}</StyledDiv>
@@ -48,4 +48,4 @@ const Button = () => {
   );
 };
 
-export default Button;
+export default IconButton;
