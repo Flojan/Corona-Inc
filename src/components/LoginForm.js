@@ -4,6 +4,7 @@ import TextInput from "./TextInput";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Useralert from "./Useralert";
+import { useStoreActions, action } from "easy-peasy";
 
 export const StyledForm = styled.form`
   h1 {
@@ -33,6 +34,7 @@ const LoginForm = () => {
   const [password, setPw] = useState("1234");
   const [alertType, setAlertType] = useState(false);
   const [infoAlert, setInfoAlert] = useState("Info");
+  const [generatorInfo, setGenInfo] = useState();
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
@@ -92,16 +94,35 @@ const LoginForm = () => {
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Login successsful");
+      //Token
       actJWT = await response.json();
       actJWT = actJWT.access_token;
-      sessionStorage.setItem("token", actJWT);
-      console.log(sessionStorage.getItem("token"));
+      setToken(actJWT);
+      //sessionStorage.setItem("token", actJWT);
+      //console.log(sessionStorage.getItem("token"));
+
+      getCurrentGenerators();
       history.push("/game");
     } else {
         setAlertType(true);
         setInfoAlert("Login faild");
     }
   };
+
+  const setToken = useStoreActions(actions => actions.user.setToken); 
+  
+  const getCurrentGenerators = async () => {
+    let generatorDetails = { id: "", income_rate: 0, order: "", amount: 0 }
+    const url = "http://server.bykovski.de:8000/generators/current-user";
+    const response = await fetch(url, 
+    {
+      method: 'GET', 
+      headers: new Headers({
+        Authorization: `Bearer ${actJWT}`
+      })
+    });
+    console.log("Generator Response: ", await response.json());
+  }
 
   return (
     <StyledForm>
