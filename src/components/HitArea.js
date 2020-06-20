@@ -13,24 +13,30 @@ export const StyledDiv = styled.div`
 
 const HitArea = () => {
   const [count, setCount] = useState(0);
+  const [vps, setVPS] = useState(0);
+  const [vpc, setVPC] = useState(0);
   const [clickSocket, setClickSocket] = useState();
   const [genClickSocket, setGenClickSocket] = useState();
   const [getClickSocket, setGetClickSocket] = useState();
 
-  let clicks = 0;
   // token wird aus globalen State geholt
   const token = useStoreState((state) => state.user.token);
   console.log("TOKEN", token);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
-    const mouseClickWS = new WebSocket(
+    const mouseClicksWS = new WebSocket(
       `ws://server.bykovski.de:8000/game/click?token=${token}`
     );
+    // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
+    mouseClicksWS.onmessage = (perClick) => {
+      let data = JSON.parse(perClick.data);
+      setVPC(data.points);
+    };
     // Socket wird in State abgespeichert
-    setClickSocket(mouseClickWS);
+    setClickSocket(mouseClicksWS);
     return () => {
-      mouseClickWS.close();
+      mouseClicksWS.close();
     };
   }, []);
   console.log(clickSocket);
@@ -40,11 +46,10 @@ const HitArea = () => {
     const getClicksWS = new WebSocket(
       `ws://server.bykovski.de:8000/game/balance?token=${token}`
     );
-    // bei einer Nachricht vom Server (Points)
+    // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     getClicksWS.onmessage = (actClicks) => {
       let data = JSON.parse(actClicks.data);
-      clicks = data.points;
-      setCount(clicks);
+      setCount(data.points);
     };
     // Socket wird in State abgespeichert
     setGetClickSocket(getClicksWS);
@@ -53,6 +58,24 @@ const HitArea = () => {
     };
   }, []);
   console.log(getClickSocket);
+
+  // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
+  useEffect(() => {
+    const genClicksWS = new WebSocket(
+      `ws://server.bykovski.de:8000/game/generators?token=${token}`
+    );
+    // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
+    genClicksWS.onmessage = (genClicks) => {
+      let data = JSON.parse(genClicks.data);
+      setVPS(data.points);
+    };
+    // Socket wird in State abgespeichert
+    setGenClickSocket(genClicksWS);
+    return () => {
+      genClicksWS.close();
+    };
+  }, []);
+  console.log(genClickSocket);
 
   //Methode um den Hit Click zu handeln und schickt click an den WebSocket
   const onHitClick = async (event) => {
@@ -63,8 +86,10 @@ const HitArea = () => {
 
   return (
     <StyledDiv>
-      <HitButton onClick={onHitClick}>Clicks: {count}</HitButton>
-      <h3>Clicks: {count}</h3>
+      <HitButton onClick={onHitClick}>{count}</HitButton>
+      <h3>Viren insgesamt: {count}</h3>
+      <h3>Viren pro Sekunde: {vps}</h3>
+      <h3>Viren pro Click: {vpc}</h3>
     </StyledDiv>
   );
 };
