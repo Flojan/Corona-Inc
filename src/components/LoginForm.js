@@ -30,7 +30,7 @@ const LoginForm = () => {
    * Erstellen der States. Damit Mail und PW gesetzt werden können und innerhalb von LoginForm
    * immer nutzbar. Mal mit einem Default zum schnellen testen initalisiert
    */
-  const [email, setEmail] = useState("def@default.com");
+  const [username, setUsername] = useState("def@default.com");
   const [password, setPw] = useState("1234");
   const [alertType, setAlertType] = useState(false);
   const [infoAlert, setInfoAlert] = useState("Info");
@@ -47,37 +47,40 @@ const LoginForm = () => {
      * Auf Tipp von Max statt <Link> um die Buttons zu machen(was nicht so super funktioniert hat)
      * https://reacttraining.com/react-router/web/api/Hooks/usehistory
      */
-    sendRegister(email, password);
+    sendRegister(username, password);
   };
 
   //Methode um den Login Click zu handeln
   const onLoginClick = (event) => {
     console.log("Login geklickt");
     event.preventDefault(); //Damit die Seite geladen wird nach dem Klick
-    sendLogin(email, password);
+    sendLogin(username, password);
   };
 
-  const sendRegister = async (email, password) => {
+  const sendRegister = async (username, password) => {
     const response = await fetch(
       "http://server.bykovski.de:8000/users/register",
       {
         method: "POST",
-        body: JSON.stringify({ username: email, password: password }),
+        body: JSON.stringify({ username: username, password: password }),
       }
     );
     //console.log(await response.json())
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Register successful");
-      history.push("/game");
+      setTimeout(() => {
+        sendLogin(username, password);
+      }, 1000);
+      // history.push("/game");
     } else {
       setInfoAlert("Register failed");
       setAlertType(false);
     }
   };
 
-  const sendLogin = async (email, password) => {
-    let details = { username: email, password: password };
+  const sendLogin = async (username, password) => {
+    let details = { username: username, password: password };
     let formBody = [];
     for (let prop in details) {
       let encodedKey = encodeURIComponent(prop);
@@ -93,42 +96,44 @@ const LoginForm = () => {
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Login successsful");
+
       //Token
       actJWT = await response.json();
       actJWT = actJWT.access_token;
       setToken(actJWT); // Setzen des Usertokens
       getCurrentGenerators();
-      history.push("/game");
+      setTimeout(() => {
+        history.push("/game");
+      }, 1000);
     } else {
-        setAlertType(true);
-        setInfoAlert("Login failed");
+      setAlertType(true);
+      setInfoAlert("Login failed");
     }
   };
 
-  const setToken = useStoreActions(actions => actions.user.setToken); 
-  
+  const setToken = useStoreActions((actions) => actions.user.setToken);
+
   const getCurrentGenerators = async () => {
-    let generatorDetails = { id: "", income_rate: 0, order: "", amount: 0 }
+    let generatorDetails = { id: "", income_rate: 0, order: "", amount: 0 };
     const url = "http://server.bykovski.de:8000/generators/current-user";
-    const response = await fetch(url, 
-    {
-      method: 'GET', 
+    const response = await fetch(url, {
+      method: "GET",
       headers: new Headers({
-        Authorization: `Bearer ${actJWT}`
-      })
+        Authorization: `Bearer ${actJWT}`,
+      }),
     });
     console.log("Generator Response: ", await response.json());
-  }
+  };
 
   return (
     <StyledForm>
       <h1>Play now!</h1>
       {/* onChange um den Textinput auf änderungen abzuhören mit kurzer Arrowfunktion */}
       <TextInput
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="e-Mail Address"
+        type="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
       />
       <TextInput
         type="password"
@@ -140,10 +145,7 @@ const LoginForm = () => {
         <Button onClick={onRegisterClick}>Register</Button>
         <Button onClick={onLoginClick}>Login</Button>
       </ButtonContainer>
-      <Useralert type={alertType}
-                 info={infoAlert} 
-                 >
-      </Useralert>
+      <Useralert type={alertType} info={infoAlert}></Useralert>
     </StyledForm>
   );
 };
