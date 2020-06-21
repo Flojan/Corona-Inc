@@ -64,7 +64,7 @@ const Game = () => {
 
 
   async function buyGenerator (id) {
-    const url = generatorUrl + id + "/next-price";
+    const url = generatorUrl + id + "/buy";
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
