@@ -34,7 +34,10 @@ const LoginForm = () => {
   const [password, setPw] = useState("1234");
   const [alertType, setAlertType] = useState(false);
   const [infoAlert, setInfoAlert] = useState("Info");
-  const [generatorInfo, setGenInfo] = useState();
+
+  //GlobalStates für User-Token und current User Generators
+  const setToken = useStoreActions((actions) => actions.user.setToken);
+  const setGenerators = useStoreActions((actions) => actions.curGenerators.setCurGenerator);
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
@@ -65,14 +68,12 @@ const LoginForm = () => {
         body: JSON.stringify({ username: username, password: password }),
       }
     );
-    //console.log(await response.json())
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Register successful");
       setTimeout(() => {
         sendLogin(username, password);
       }, 1000);
-      // history.push("/game");
     } else {
       setInfoAlert("Register failed");
       setAlertType(false);
@@ -111,10 +112,9 @@ const LoginForm = () => {
     }
   };
 
-  const setToken = useStoreActions((actions) => actions.user.setToken);
 
   const getCurrentGenerators = async () => {
-    let generatorDetails = { id: "", income_rate: 0, order: "", amount: 0 };
+    let generatorDetails = { order: "", amount: 0 };
     const url = "http://server.bykovski.de:8000/generators/current-user";
     const response = await fetch(url, {
       method: "GET",
@@ -123,6 +123,8 @@ const LoginForm = () => {
       }),
     });
     console.log("Generator Response: ", await response.json());
+    //TODO in Map umwandeln
+    setGenerators(response);
   };
 
   return (

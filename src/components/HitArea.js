@@ -21,7 +21,7 @@ const HitArea = () => {
 
   // token wird aus globalen State geholt
   const token = useStoreState((state) => state.user.token);
-  console.log("TOKEN", token);
+  //console.log("TOKEN", token);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {

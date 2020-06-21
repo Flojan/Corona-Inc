@@ -6,6 +6,7 @@ import IconButton from "../components/IconButton";
 import containerBackground from "../images/greybackground2.png";
 import clickersBackground from "../images/blackbackground.png";
 import menubarBackground from "../images/coronaincbackground2.png";
+import { useStoreState } from "easy-peasy";
 
 export const Container = styled.div`
   background-image: url(${containerBackground});
@@ -58,9 +59,20 @@ export const StyledHeadlines = styled.h2`
 
 const Game = () => {
   const [count, setCount] = useState(0);
+  const token = useStoreState((state) => state.user.token);
+  const generatorUrl = "http://server.bykovski.de:8000/generators/";
 
-  const GeneratorOne = (event) => {
-    event.preventDefault();
+
+  async function buyGenerator (id) {
+    const url = generatorUrl + id + "/next-price";
+    const response = await fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+    console.log("Buy Gen Server Response", await response.json());
+    
     setCount(count + 10);
   };
   return (
@@ -68,7 +80,7 @@ const Game = () => {
       <MenuBar></MenuBar>
       <GeneratorContainer>
         <StyledHeadlines>Generators</StyledHeadlines>
-        <IconButton text="Erkältung"></IconButton>
+        <IconButton text="Erkältung" onClick={() => buyGenerator("1")}></IconButton>
         <IconButton text="Grippe"></IconButton>
         <IconButton text="Lungenentzündung"></IconButton>
         <IconButton text="Herzinfarkt"></IconButton>
