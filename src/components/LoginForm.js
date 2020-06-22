@@ -119,12 +119,11 @@ const LoginForm = () => {
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
-        Authorization: `Bearer ${actJWT}`,
-      }),
+        Authorization: `Bearer ${actJWT}`
+      })
     });
-    console.log("Generator Response: ", await response.json());
-    //TODO in Map umwandeln
-    setGenerators(response);
+    let data = await response.json();
+    setGenerators(data);
   };
 
   return (

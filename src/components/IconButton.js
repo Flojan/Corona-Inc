@@ -28,7 +28,7 @@ export const IconImage = styled.img`
 `;
 
 const IconButton = ({ text, icon, id, onClick }) => {
-  console.log("IconButton -> icon", icon);
+  //console.log("IconButton -> icon", icon);
   const [count] = useState(0);
 
   return (

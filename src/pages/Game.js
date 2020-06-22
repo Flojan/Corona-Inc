@@ -58,10 +58,14 @@ export const StyledHeadlines = styled.h2`
 `;
 
 const Game = () => {
-  const [count, setCount] = useState(0);
-  const token = useStoreState((state) => state.user.token);
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
   const upgradeUrl = "http://server.bykovski.de:8000/upgrades/";
+  const StatusCodeSuccessful = 200;
+  const token = useStoreState((state) => state.user.token);
+  const userData = useStoreState((state) => state.curGenerators.details)
+  //console.log("USERDATA", userData["0"].amount);
+  
+  const [count, setCount] = useState(0);
 
   const upgrades = [
     { text: "Husten", icon: "cough", id: "1" },
@@ -88,21 +92,33 @@ const Game = () => {
     { text: "Lähmung", icon: "cough", id: "11" },
     { text: "Organversagen", icon: "cough", id: "12" },
     { text: "Herzversagen", icon: "cough", id: "13" },
-
     //keine id für 13
   ];
 
   async function buyGenerator(id) {
     const url = generatorUrl + id + "/buy";
-    console.log(url);
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
-        Authorization: `Bearer ${token}`,
-      }),
+        Authorization: `Bearer ${token}`
+      })
     });
-    console.log("Buy Gen Server Response", await response.json());
-    //console.log(JSON.parse(response.json()));
+    //console.log("Buy Gen Server Response", await response.json());
+    let data = await response.json();
+    let amount = data.amount; //Amount für current Generator
+    
+
+    if (response.status === StatusCodeSuccessful) {
+      const nextPriceUrl = generatorUrl + id + "/next-price";
+      const nextPriceResponse = await fetch(nextPriceUrl, {
+        method: "GET", 
+        headers: new Headers({
+          Authorization: `Bearer ${token}`
+        })
+      });
+      let nextPrice = await nextPriceResponse.json(); //Hier ist der Next Price drin
+    }
+
     setCount(count + 10);
   }
 
