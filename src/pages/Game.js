@@ -61,10 +61,14 @@ const Game = () => {
   const [count, setCount] = useState(0);
   const token = useStoreState((state) => state.user.token);
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
-  const generators = [
+  const upgrades = [
     { text: "Husten", icon: "cough" },
-    { text: "Dully", icon: "diseaseicon" },
-  ]; //KEKW
+    { text: "Niesen", icon: "diseaseicon" },
+  ];
+  const generators = [
+    { text: "Lungenentzündung", icon: "cough" },
+    { text: "KEKW", icon: "diseaseicon" },
+  ];
 
   async function buyGenerator(id) {
     const url = generatorUrl + id + "/buy";
@@ -78,6 +82,20 @@ const Game = () => {
 
     setCount(count + 10);
   }
+
+  async function buyUpgrade(id) {
+    const url = generatorUrl + id + "/buy";
+    const response = await fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+    console.log("Buy Upg Server Response", await response.json());
+
+    setCount(count + 10);
+  }
+
   return (
     <Container>
       <MenuBar></MenuBar>
@@ -96,13 +114,13 @@ const Game = () => {
       </GeneratorContainer>
       <UpgradesContainer>
         <StyledHeadlines>Upgrades</StyledHeadlines>
-        {generators.map((generator, index) => {
+        {upgrades.map((upgrade, index) => {
           return (
             <IconButton
               key={index}
-              text={generator.text}
-              icon={generator.icon}
-              onClick={() => buyGenerator("1")}
+              text={upgrade.text}
+              icon={upgrade.icon}
+              onClick={() => buyUpgrade("1")}
             />
           );
         })}
