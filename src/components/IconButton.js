@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import backgroundImage from "../images/greybackground.png";
 import icon from "../images/diseaseicon.png";
+import icon1 from "../images/cough.png";
 
 export const StyledIconButton = styled.button`
   background-image: url(${backgroundImage});
@@ -28,7 +29,8 @@ export const IconImage = styled.img`
   height: 45px;
 `;
 
-const IconButton = ({ text, onClick }) => {
+const IconButton = ({ icon, text, onClick }) => {
+  console.log("IconButton -> icon", icon);
   const [count, setCount] = useState(0);
   const click = 1;
 
@@ -38,7 +40,7 @@ const IconButton = ({ text, onClick }) => {
 
   return (
     <StyledIconButton onClick={onClick}>
-      <IconImage src={icon} />
+      <IconImage src={require(`../images/${icon}.png`)} />
       <StyledDiv>
         <span>{text}</span>
         <span>15</span>

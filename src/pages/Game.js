@@ -61,9 +61,12 @@ const Game = () => {
   const [count, setCount] = useState(0);
   const token = useStoreState((state) => state.user.token);
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
+  const generators = [
+    { text: "Husten", icon: "cough" },
+    { text: "Dully", icon: "diseaseicon" },
+  ]; //KEKW
 
-
-  async function buyGenerator (id) {
+  async function buyGenerator(id) {
     const url = generatorUrl + id + "/buy";
     const response = await fetch(url, {
       method: "GET",
@@ -72,27 +75,37 @@ const Game = () => {
       }),
     });
     console.log("Buy Gen Server Response", await response.json());
-    
+
     setCount(count + 10);
-  };
+  }
   return (
     <Container>
       <MenuBar></MenuBar>
       <GeneratorContainer>
         <StyledHeadlines>Generators</StyledHeadlines>
-        <IconButton text="Erkältung" onClick={() => buyGenerator("1")}></IconButton>
-        <IconButton text="Grippe"></IconButton>
-        <IconButton text="Lungenentzündung"></IconButton>
-        <IconButton text="Herzinfarkt"></IconButton>
-        <IconButton text="Herzinfarkt"></IconButton>
+        {generators.map((generator, index) => {
+          return (
+            <IconButton
+              key={index}
+              text={generator.text}
+              icon={generator.icon}
+              onClick={() => buyGenerator("1")}
+            />
+          );
+        })}
       </GeneratorContainer>
       <UpgradesContainer>
         <StyledHeadlines>Upgrades</StyledHeadlines>
-        <IconButton text="Husten"></IconButton>
-        <IconButton text="Niesen"></IconButton>
-        <IconButton text="Kotzen"></IconButton>
-        <IconButton text="Kacken"></IconButton>
-        <IconButton text="Pissen"></IconButton>
+        {generators.map((generator, index) => {
+          return (
+            <IconButton
+              key={index}
+              text={generator.text}
+              icon={generator.icon}
+              onClick={() => buyGenerator("1")}
+            />
+          );
+        })}
       </UpgradesContainer>
       <ClickerContainer>
         <HitArea></HitArea>
