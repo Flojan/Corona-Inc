@@ -39,7 +39,7 @@ const HitArea = () => {
       mouseClicksWS.close();
     };
   }, []);
-  console.log(clickSocket);
+  //console.log(clickSocket);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
@@ -57,7 +57,7 @@ const HitArea = () => {
       getClicksWS.close();
     };
   }, []);
-  console.log(getClickSocket);
+  //console.log(getClickSocket);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
@@ -75,12 +75,12 @@ const HitArea = () => {
       genClicksWS.close();
     };
   }, []);
-  console.log(genClickSocket);
+  //console.log(genClickSocket);
 
   //Methode um den Hit Click zu handeln und schickt click an den WebSocket
   const onHitClick = async (event) => {
     clickSocket.send("click");
-    console.log("HitButton geklickt");
+    //console.log("HitButton geklickt");
     // setCount(count + 1);
   };
 

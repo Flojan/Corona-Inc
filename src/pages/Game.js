@@ -61,17 +61,40 @@ const Game = () => {
   const [count, setCount] = useState(0);
   const token = useStoreState((state) => state.user.token);
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
+  const upgradeUrl = "http://server.bykovski.de:8000/upgrades/";
+
   const upgrades = [
-    { text: "Husten", icon: "cough" },
-    { text: "Niesen", icon: "diseaseicon" },
+    { text: "Husten", icon: "cough", id: "1" },
+    { text: "Niesen", icon: "diseaseicon", id: "2" },
+    { text: "Erbrechen", icon: "diseaseicon", id: "3" },
+    { text: "Vögel", icon: "diseaseicon", id: "4" },
+    { text: "Ratten", icon: "diseaseicon", id: "5" },
+    { text: "Moskitos", icon: "diseaseicon", id: "6" },
+    { text: "Luft", icon: "diseaseicon", id: "7" },
+    { text: "Wasser", icon: "diseaseicon", id: "8" },
   ];
+
   const generators = [
-    { text: "Lungenentzündung", icon: "cough" },
-    { text: "KEKW", icon: "diseaseicon" },
+    { text: "Schlafstörungen", icon: "cough", id: "1" },
+    { text: "Paranoia", icon: "cough", id: "2" },
+    { text: "Ausschlag", icon: "cough", id: "3" },
+    { text: "Anämie", icon: "cough", id: "4" },
+    { text: "Zysten", icon: "cough", id: "5" },
+    { text: "Abzesse", icon: "cough", id: "6" },
+    { text: "Lungenentzündung", icon: "cough", id: "7" },
+    { text: "Lungenfibrose", icon: "cough", id: "8" },
+    { text: "Tumore", icon: "cough", id: "9" },
+    { text: "Aneurysma", icon: "cough", id: "10" },
+    { text: "Lähmung", icon: "cough", id: "11" },
+    { text: "Organversagen", icon: "cough", id: "12" },
+    { text: "Herzversagen", icon: "cough", id: "13" },
+
+    //keine id für 13
   ];
 
   async function buyGenerator(id) {
     const url = generatorUrl + id + "/buy";
+    console.log(url);
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
@@ -79,12 +102,12 @@ const Game = () => {
       }),
     });
     console.log("Buy Gen Server Response", await response.json());
-
+    //console.log(JSON.parse(response.json()));
     setCount(count + 10);
   }
 
   async function buyUpgrade(id) {
-    const url = generatorUrl + id + "/buy";
+    const url = upgradeUrl + id + "/buy";
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
@@ -100,27 +123,29 @@ const Game = () => {
     <Container>
       <MenuBar></MenuBar>
       <GeneratorContainer>
-        <StyledHeadlines>Generators</StyledHeadlines>
+        <StyledHeadlines>Symptome</StyledHeadlines>
         {generators.map((generator, index) => {
           return (
             <IconButton
               key={index}
               text={generator.text}
               icon={generator.icon}
-              onClick={() => buyGenerator("1")}
+              id={generator.id}
+              onClick={() => buyGenerator(generator.id)}
             />
           );
         })}
       </GeneratorContainer>
       <UpgradesContainer>
-        <StyledHeadlines>Upgrades</StyledHeadlines>
+        <StyledHeadlines>Übertragung</StyledHeadlines>
         {upgrades.map((upgrade, index) => {
           return (
             <IconButton
               key={index}
               text={upgrade.text}
               icon={upgrade.icon}
-              onClick={() => buyUpgrade("1")}
+              id={upgrade.id}
+              onClick={() => buyUpgrade(upgrade.id)}
             />
           );
         })}
