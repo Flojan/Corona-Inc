@@ -13,7 +13,7 @@ const userModel = {
 };
 
 const curGeneratorModel = {
-    details: null,
+    details: [],
     setCurGenerator: action((state, details) => {
         state.details = details;
         console.log("Genreator DETAILS", details);

@@ -63,8 +63,7 @@ const Game = () => {
   const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
   const userData = useStoreState((state) => state.curGenerators.details)
-  //console.log("USERDATA", userData["0"].amount);
-  
+  // Zugriff auf Amounts per userData[_generatorID_]   
   const [count, setCount] = useState(0);
 
   const upgrades = [
