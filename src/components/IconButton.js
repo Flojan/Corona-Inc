@@ -47,7 +47,7 @@ const IconButton = ({ text, icon, amount, onClick }) => {
       <IconImage src={require(`../images/icons/${icon}.png`)} />
       <StyledDiv>
         <span>{text}</span>
-        {/* <span>{amount}}</span> */}
+        <span>{amount}</span>
       </StyledDiv>
       <StyledDiv>{count}</StyledDiv>
     </StyledIconButton>
