@@ -33,7 +33,7 @@ const IconButton = ({ text, icon, id, onClick }) => {
 
   return (
     <StyledIconButton onClick={onClick}>
-      <IconImage src={require(`../images/icons/sympthome/${icon}.png`)} />
+      <IconImage src={require(`../images/icons/symptome/${icon}.png`)} />
       <StyledDiv>
         <span>{text}</span>
         <span>15</span>
