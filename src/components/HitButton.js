@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import backgroundImage from "../images/virusimage.png";
 
-export const StyledButton = styled.button`
-  /* background-color: #ff0000; */
-  background-image: url(${backgroundImage});
+export const StyledHitButton = styled.button`
+  background: url(${backgroundImage});
   background-position: center;
   background-size: 200px;
   border: none;
@@ -14,12 +13,13 @@ export const StyledButton = styled.button`
   height: 200px;
   margin: 5px;
   border-radius: 50%;
+  &:hover {
+    width: 250px;
+  }
 `;
 
-const HitButton = ({ id, children, onClick = () => {} }) => (
-  <StyledButton id={id} onClick={onClick}>
-    {children}
-  </StyledButton> //props.children
+const HitButton = ({ onClick }) => (
+  <StyledHitButton onClick={onClick}></StyledHitButton> //props.children
 );
 
 export default HitButton;

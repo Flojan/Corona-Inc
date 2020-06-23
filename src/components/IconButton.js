@@ -27,16 +27,27 @@ export const IconImage = styled.img`
   height: 45px;
 `;
 
-const IconButton = ({ text, icon, id, onClick }) => {
+const IconButton = ({ text, icon, amount, onClick }) => {
   //console.log("IconButton -> icon", icon);
-  const [count] = useState(0);
+  const [count, setCount] = useState(0);
+  const click = 1;
+
+  const onHitClick = async () => {
+    setCount(count + click);
+  };
 
   return (
-    <StyledIconButton onClick={onClick}>
+    //, onHitClick
+    <StyledIconButton
+      onClick={() => {
+        onClick();
+        onHitClick();
+      }}
+    >
       <IconImage src={require(`../images/icons/symptome/${icon}.png`)} />
       <StyledDiv>
         <span>{text}</span>
-        <span>15</span>
+        {/* <span>{amount}}</span> */}
       </StyledDiv>
       <StyledDiv>{count}</StyledDiv>
     </StyledIconButton>

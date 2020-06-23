@@ -144,6 +144,7 @@ const Game = () => {
               text={generator.text}
               icon={generator.icon}
               id={generator.id}
+              //amount={}
               onClick={() => buyGenerator(generator.id)}
             />
           );
