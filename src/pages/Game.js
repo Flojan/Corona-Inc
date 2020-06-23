@@ -62,12 +62,12 @@ const Game = () => {
   const upgradeUrl = "http://server.bykovski.de:8000/upgrades/";
   const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
-  const userData = useStoreState((state) => state.curGenerators.details)
-  // Zugriff auf Amounts per userData[_generatorID_]   
+  const userData = useStoreState((state) => state.curGenerators.details);
+  // Zugriff auf Amounts per userData[_generatorID_]
   const [count, setCount] = useState(0);
 
   const upgrades = [
-    { text: "Husten", icon: "cough", id: "1" },
+    { text: "Husten", icon: "diseaseicon", id: "1" },
     { text: "Niesen", icon: "diseaseicon", id: "2" },
     { text: "Erbrechen", icon: "diseaseicon", id: "3" },
     { text: "Vögel", icon: "diseaseicon", id: "4" },
@@ -78,19 +78,18 @@ const Game = () => {
   ];
 
   const generators = [
-    { text: "Schlafstörungen", icon: "cough", id: "1" },
-    { text: "Paranoia", icon: "cough", id: "2" },
-    { text: "Ausschlag", icon: "cough", id: "3" },
-    { text: "Anämie", icon: "cough", id: "4" },
-    { text: "Zysten", icon: "cough", id: "5" },
-    { text: "Abzesse", icon: "cough", id: "6" },
-    { text: "Lungenentzündung", icon: "cough", id: "7" },
-    { text: "Lungenfibrose", icon: "cough", id: "8" },
-    { text: "Tumore", icon: "cough", id: "9" },
-    { text: "Aneurysma", icon: "cough", id: "10" },
-    { text: "Lähmung", icon: "cough", id: "11" },
-    { text: "Organversagen", icon: "cough", id: "12" },
-    { text: "Herzversagen", icon: "cough", id: "13" },
+    { text: "Schlafstörung", icon: "schlafstörung", id: "1" },
+    { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2" },
+    { text: "Paranoia", icon: "paranoia", id: "3" },
+    { text: "Ausschlag", icon: "ausschlag", id: "4" },
+    { text: "Herzrasen", icon: "herzrasen", id: "5" },
+    { text: "Abzesse", icon: "abzesse", id: "6" },
+    { text: "Tumor", icon: "tumor", id: "7" },
+    { text: "Lähmung", icon: "lähmung", id: "8" },
+    { text: "Lungenentzündung", icon: "lungenentzündung", id: "9" },
+    { text: "Aneurysma", icon: "aneurysma", id: "10" },
+    { text: "Lungenfibrose", icon: "lungenfibrose", id: "11" },
+    { text: "Herzversagen", icon: "herzversagen", id: "12" },
     //keine id für 13
   ];
 
@@ -99,21 +98,20 @@ const Game = () => {
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
-        Authorization: `Bearer ${token}`
-      })
+        Authorization: `Bearer ${token}`,
+      }),
     });
     //console.log("Buy Gen Server Response", await response.json());
     let data = await response.json();
     let amount = data.amount; //Amount für current Generator
-    
 
     if (response.status === StatusCodeSuccessful) {
       const nextPriceUrl = generatorUrl + id + "/next-price";
       const nextPriceResponse = await fetch(nextPriceUrl, {
-        method: "GET", 
+        method: "GET",
         headers: new Headers({
-          Authorization: `Bearer ${token}`
-        })
+          Authorization: `Bearer ${token}`,
+        }),
       });
       let nextPrice = await nextPriceResponse.json(); //Hier ist der Next Price drin
     }
