@@ -30,19 +30,18 @@ const GeneratorArea = () => {
   const [count, setCount] = useState(0);
 
   const generators = [
-    { text: "Schlafstörung", icon: "schlafstörung", id: "1", amount: userData.amount },
+    { text: "Schlafstoerung", icon: "schlafstörung", id: "1", amount: userData.amount },
     { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2", amount: userData.amount },
     { text: "Paranoia", icon: "paranoia", id: "3", amount: userData.amount },
     { text: "Ausschlag", icon: "ausschlag", id: "4", amount: userData.amount },
     { text: "Herzrasen", icon: "herzrasen", id: "5", amount: userData.amount },
     { text: "Abzesse", icon: "abzesse", id: "6", amount: userData.amount },
-    { text: "Tumor", icon: "tumor", id: "7", amount: userData.amount },
-    { text: "Lähmung", icon: "lähmung", id: "8", amount: userData.amount },
-    { text: "Lungenentzündung", icon: "lungenentzündung", id: "9", amount: userData.amount },
-    { text: "Aneurysma", icon: "aneurysma", id: "10", amount: userData.amount },
-    { text: "Lungenfibrose", icon: "lungenfibrose", id: "11", amount: userData.amount },
-    { text: "Herzversagen", icon: "herzversagen", id: "12", amount: userData.amount },
-    //keine id für 13
+    { text: "Tumor", icon: "tumor", id: "12", amount: userData.amount },
+    { text: "Laehmung", icon: "lähmung", id: "7", amount: userData.amount },
+    { text: "Lungenentzuendung", icon: "lungenentzündung", id: "8", amount: userData.amount },
+    { text: "Aneurysma", icon: "aneurysma", id: "9", amount: userData.amount },
+    { text: "Lungenfibrose", icon: "lungenfibrose", id: "10", amount: userData.amount },
+    { text: "Herzversagen", icon: "herzversagen", id: "11", amount: userData.amount },
   ];
 
   async function buyGenerator(id) {

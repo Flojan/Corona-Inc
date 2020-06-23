@@ -6,10 +6,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { StoreProvider } from "easy-peasy";
 import store from "./store/Store";
+import GlobalStyle from "./globalstyles";
 
 ReactDOM.render(
   <React.StrictMode>
     <StoreProvider store={store}>
+      <GlobalStyle />
       <Router>
         <Redirect from="/" to="/login" />
         <Switch>
