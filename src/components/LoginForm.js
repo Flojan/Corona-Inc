@@ -38,6 +38,7 @@ const LoginForm = () => {
   //GlobalStates für User-Token und current User Generators
   const setToken = useStoreActions((actions) => actions.user.setToken);
   const setGenerators = useStoreActions((actions) => actions.curGenerators.setCurGenerator);
+  const setUpgrades = useStoreActions((actions) => actions.curUpgrades.setCurUpgrades);
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
@@ -103,6 +104,7 @@ const LoginForm = () => {
       actJWT = actJWT.access_token;
       setToken(actJWT); // Setzen des Usertokens
       getCurrentGenerators();
+      getCurrentUpgrades();
       setTimeout(() => {
         history.push("/game");
       }, 1000);
@@ -112,9 +114,19 @@ const LoginForm = () => {
     }
   };
 
+  const getCurrentUpgrades = async () => {
+    const url = "http://server.bykovski.de:8000/upgrades/current-user";
+    const response = await fetch(url, {
+      method: "GET", 
+      header: new Headers({
+        Authorization: `Bearer ${actJWT}`
+      })
+    });
+    let data = await response.json();
+    setUpgrades(data);
+  }
 
   const getCurrentGenerators = async () => {
-    let generatorDetails = { order: "", amount: 0 };
     const url = "http://server.bykovski.de:8000/generators/current-user";
     const response = await fetch(url, {
       method: "GET",

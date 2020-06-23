@@ -19,12 +19,22 @@ const curGeneratorModel = {
         console.log("Genreator DETAILS", details);
     })
 }
+
+const curUpgradesModel = {
+    details: [],
+    setCurUpgrades: action((state, details) => {
+        state.details = details;
+        console.log("Upgrade DETAILS", details);
+        
+    })
+}
 /**
  * in storeModel sind alle Storemodels gespeichert. 
  */
 const storeModel = {
     user: userModel,
-    curGenerators: curGeneratorModel
+    curGenerators: curGeneratorModel,
+    curUpgrades: curUpgradesModel
 };
 
 export default storeModel;

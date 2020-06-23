@@ -27,17 +27,17 @@ const UpgradeArea = () => {
   const token = useStoreState((state) => state.user.token);
   const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
-  const [count, setCount] = useState(0);
+  const [cost, setCost] = useState(0); //Init über userData
 
   const upgrades = [
-    { text: "Erbrechen", icon: "erbrechen", id: "1" },
-    { text: "Husten", icon: "husten", id: "2" },
-    { text: "Niesen", icon: "niesen", id: "3" },
-    { text: "Voegel", icon: "vögel", id: "4" },
-    { text: "Ratten", icon: "ratten", id: "5" },
-    { text: "Moskitos", icon: "moskitos", id: "6" },
-    { text: "Luft", icon: "luft", id: "7" },
-    { text: "Wasser", icon: "wasser", id: "8" },
+    { text: "Erbrechen", icon: "erbrechen", id: "1" , cost: userData.cost },
+    { text: "Husten", icon: "husten", id: "2", cost: userData.cost },
+    { text: "Niesen", icon: "niesen", id: "3", cost: userData.cost },
+    { text: "Voegel", icon: "vögel", id: "4", cost: userData.cost },
+    { text: "Ratten", icon: "ratten", id: "5", cost: userData.cost },
+    { text: "Moskitos", icon: "moskitos", id: "6", cost: userData.cost },
+    { text: "Luft", icon: "luft", id: "7", cost: userData.cost },
+    { text: "Wasser", icon: "wasser", id: "8", cost: userData.cost },
   ];
 
   async function buyUpgrade(id) {
@@ -48,9 +48,22 @@ const UpgradeArea = () => {
         Authorization: `Bearer ${token}`,
       }),
     });
-    console.log("Buy Upg Server Response", await response.json());
+    let data = await response.json();
+    console.log("Upgrade Data", data);
+    
+    if (response.status === StatusCodeSuccessful) {
+      const availiabeUpgradesUrl = upgradeUrl + "/available";
+      const availableResponse = await fetch(availiabeUpgradesUrl, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: `Bearer ${token}`
+        })
+      });
+      let availableUpgrades = await availableResponse.json();
+      // Ist noch ein Object. 
+    }
 
-    setCount(count + 10);
+    setCost(cost + 10);
   }
 
   return (

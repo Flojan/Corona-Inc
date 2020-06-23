@@ -27,7 +27,7 @@ const GeneratorArea = () => {
   const token = useStoreState((state) => state.user.token);
   const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
-  const [count, setCount] = useState(0);
+  const [curAmount, setAmount] = useState(0); //State setzen über userData
 
   const generators = [
     { text: "Schlafstoerung", icon: "schlafstörung", id: "1", amount: userData.amount },
@@ -55,7 +55,7 @@ const GeneratorArea = () => {
     //console.log("Buy Gen Server Response", await response.json());
     let data = await response.json();
     let amount = data.amount; //Amount für current Generator
-    setCount(amount);
+    setAmount(amount);
     if (response.status === StatusCodeSuccessful) {
       const nextPriceUrl = generatorUrl + id + "/next-price";
       const nextPriceResponse = await fetch(nextPriceUrl, {

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+//Color stimmt noch nicht ganz. Braucht vermutlich eigenes Prop. 
 export const StyledUseralert = styled.div`
     background-color: ${props => props.type === "true" ? '#D6130D' : 'blue'};
     display: ${props => props.display === "true" ? 'block': 'none'};
