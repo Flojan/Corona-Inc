@@ -67,14 +67,14 @@ const Game = () => {
   const [count, setCount] = useState(0);
 
   const upgrades = [
-    { text: "Husten", icon: "diseaseicon", id: "1" },
-    { text: "Niesen", icon: "diseaseicon", id: "2" },
-    { text: "Erbrechen", icon: "diseaseicon", id: "3" },
-    { text: "Vögel", icon: "diseaseicon", id: "4" },
-    { text: "Ratten", icon: "diseaseicon", id: "5" },
-    { text: "Moskitos", icon: "diseaseicon", id: "6" },
-    { text: "Luft", icon: "diseaseicon", id: "7" },
-    { text: "Wasser", icon: "diseaseicon", id: "8" },
+    { text: "Erbrechen", icon: "erbrechen", id: "1" },
+    { text: "Husten", icon: "husten", id: "2" },
+    { text: "Niesen", icon: "niesen", id: "3" },
+    { text: "Vögel", icon: "vögel", id: "4" },
+    { text: "Ratten", icon: "ratten", id: "5" },
+    { text: "Moskitos", icon: "moskitos", id: "6" },
+    { text: "Luft", icon: "luft", id: "7" },
+    { text: "Wasser", icon: "wasser", id: "8" },
   ];
 
   const generators = [

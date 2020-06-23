@@ -44,7 +44,7 @@ const IconButton = ({ text, icon, amount, onClick }) => {
         onHitClick();
       }}
     >
-      <IconImage src={require(`../images/icons/symptome/${icon}.png`)} />
+      <IconImage src={require(`../images/icons/${icon}.png`)} />
       <StyledDiv>
         <span>{text}</span>
         {/* <span>{amount}}</span> */}
