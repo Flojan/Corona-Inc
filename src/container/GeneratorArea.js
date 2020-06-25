@@ -30,10 +30,21 @@ const GeneratorArea = () => {
   const [curAmount, setAmount] = useState(0); //State setzen über userData
   const [curNextPrice, setNextPrice] = useState(0);
 
-  // console.log("userdataaa: ", userData[0].amount);
+  if (userData.length !== 0) {
+    console.log("userdataaa: ", userData[0].amount);
+  }
+
+  const findUserGen = (id) => {
+    if (userData.length === 0) {
+      return;
+    }
+    return userData.find((userGen) => {
+      return userGen.generator.id === id;
+    });
+  };
 
   const generators = [
-    { text: "Schlafstoerung", icon: "schlafstörung", id: "1", amount: userData.amount },
+    { text: "Schlafstörung", icon: "schlafstörung", id: "1", amount: userData.amount },
     { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2", amount: userData.amount },
     { text: "Paranoia", icon: "paranoia", id: "3", amount: userData.amount },
     { text: "Ausschlag", icon: "ausschlag", id: "4", amount: userData.amount },
@@ -41,7 +52,7 @@ const GeneratorArea = () => {
     { text: "Abzesse", icon: "abzesse", id: "6", amount: userData.amount },
     { text: "Tumor", icon: "tumor", id: "12", amount: userData.amount },
     { text: "Laehmung", icon: "lähmung", id: "7", amount: userData.amount },
-    { text: "Lungenentzuendung", icon: "lungenentzündung", id: "8", amount: userData.amount },
+    { text: "Lungenentzündung", icon: "lungenentzündung", id: "8", amount: userData.amount },
     { text: "Aneurysma", icon: "aneurysma", id: "9", amount: userData.amount },
     { text: "Lungenfibrose", icon: "lungenfibrose", id: "10", amount: userData.amount },
     { text: "Herzversagen", icon: "herzversagen", id: "11", amount: userData.amount },
@@ -74,24 +85,35 @@ const GeneratorArea = () => {
       setNextPrice(nextPrice);
     }
   }
+
+  // obejkt erstellen als State GenPrices =>
+
+  let buttons = null;
+  if (userData) {
+    buttons = [];
+    for (const generator of generators) {
+      const userGen = findUserGen(generator.id);
+      if (!userGen) {
+        continue;
+      }
+      buttons.push(
+        <IconButton
+          key={generator.id}
+          text={generator.text}
+          icon={generator.icon}
+          id={generator.id}
+          nextPrice={curNextPrice}
+          amount={userGen.amount}
+          onClick={() => buyGenerator(generator.id)}
+        />
+      );
+    }
+  }
+
   return (
     <GeneratorContainer>
       <StyledHeadlines>Symptome</StyledHeadlines>
-      {generators.map((generator, index) => {
-        // console.log(generator);
-
-        return (
-          <IconButton
-            key={index}
-            text={generator.text}
-            icon={generator.icon}
-            id={generator.id}
-            nextPrice={curNextPrice}
-            amount={curAmount}
-            onClick={() => buyGenerator(generator.id)}
-          />
-        );
-      })}
+      {buttons}
     </GeneratorContainer>
   );
 };
