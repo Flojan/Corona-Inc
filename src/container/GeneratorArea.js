@@ -28,6 +28,9 @@ const GeneratorArea = () => {
   const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
   const [curAmount, setAmount] = useState(0); //State setzen über userData
+  const [curNextPrice, setNextPrice] = useState(0);
+
+  // console.log("userdataaa: ", userData[0].amount);
 
   const generators = [
     { text: "Schlafstoerung", icon: "schlafstörung", id: "1", amount: userData.amount },
@@ -54,6 +57,8 @@ const GeneratorArea = () => {
     });
     //console.log("Buy Gen Server Response", await response.json());
     let data = await response.json();
+    console.log(data.amount); // hier erhalte ich auch den amount
+
     let amount = data.amount; //Amount für current Generator
     setAmount(amount);
     if (response.status === StatusCodeSuccessful) {
@@ -65,19 +70,24 @@ const GeneratorArea = () => {
         }),
       });
       let nextPrice = await nextPriceResponse.json(); //Hier ist der Next Price drin
+      console.log(nextPrice);
+      setNextPrice(nextPrice);
     }
   }
   return (
     <GeneratorContainer>
       <StyledHeadlines>Symptome</StyledHeadlines>
       {generators.map((generator, index) => {
+        // console.log(generator);
+
         return (
           <IconButton
             key={index}
             text={generator.text}
             icon={generator.icon}
             id={generator.id}
-            amount={generator.amount}
+            nextPrice={curNextPrice}
+            amount={curAmount}
             onClick={() => buyGenerator(generator.id)}
           />
         );

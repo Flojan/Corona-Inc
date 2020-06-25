@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import HitArea from "../components/HitArea";
+import HitArea from "../container/HitArea";
 import containerBackground from "../images/greybackground2.png";
 import menubarBackground from "../images/coronaincbackground2.png";
 import GeneratorArea from "../container/GeneratorArea";

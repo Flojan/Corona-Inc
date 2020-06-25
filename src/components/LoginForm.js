@@ -62,13 +62,10 @@ const LoginForm = () => {
   };
 
   const sendRegister = async (username, password) => {
-    const response = await fetch(
-      "http://server.bykovski.de:8000/users/register",
-      {
-        method: "POST",
-        body: JSON.stringify({ username: username, password: password }),
-      }
-    );
+    const response = await fetch("http://server.bykovski.de:8000/users/register", {
+      method: "POST",
+      body: JSON.stringify({ username: username, password: password }),
+    });
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Register successful");
@@ -117,22 +114,22 @@ const LoginForm = () => {
   const getCurrentUpgrades = async () => {
     const url = "http://server.bykovski.de:8000/upgrades/current-user";
     const response = await fetch(url, {
-      method: "GET", 
-      header: new Headers({
-        Authorization: `Bearer ${actJWT}`
-      })
+      method: "GET",
+      headers: new Headers({
+        Authorization: `Bearer ${actJWT}`,
+      }),
     });
     let data = await response.json();
     setUpgrades(data);
-  }
+  };
 
   const getCurrentGenerators = async () => {
     const url = "http://server.bykovski.de:8000/generators/current-user";
     const response = await fetch(url, {
       method: "GET",
       headers: new Headers({
-        Authorization: `Bearer ${actJWT}`
-      })
+        Authorization: `Bearer ${actJWT}`,
+      }),
     });
     let data = await response.json();
     setGenerators(data);
