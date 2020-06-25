@@ -94,7 +94,7 @@ const LoginForm = () => {
     });
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
-      setInfoAlert("Login successsful");
+      setInfoAlert("Login successful");
 
       //Token
       actJWT = await response.json();
@@ -154,6 +154,7 @@ const LoginForm = () => {
       <ButtonContainer>
         <Button onClick={onRegisterClick}>Register</Button>
         <Button onClick={onLoginClick}>Login</Button>
+        <Button> Test </Button>
       </ButtonContainer>
       <Useralert type={alertType} info={infoAlert}></Useralert>
     </StyledForm>

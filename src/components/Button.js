@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const StyledButton = styled.button`
   background-color: red;
@@ -10,8 +10,10 @@ export const StyledButton = styled.button`
   font-size: 16px;
   width: 155px;
   margin: 5px;
+  transition: all 0.5s;
   &:hover {
     background: white;
+    padding-right: 50px;
   }
 `;
 
