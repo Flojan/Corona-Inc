@@ -25,9 +25,7 @@ const HitArea = () => {
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
-    const mouseClicksWS = new WebSocket(
-      `ws://server.bykovski.de:8000/game/click?token=${token}`
-    );
+    const mouseClicksWS = new WebSocket(`ws://server.bykovski.de:8000/game/click?token=${token}`);
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     mouseClicksWS.onmessage = (perClick) => {
       let data = JSON.parse(perClick.data);
@@ -43,9 +41,7 @@ const HitArea = () => {
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
-    const getClicksWS = new WebSocket(
-      `ws://server.bykovski.de:8000/game/balance?token=${token}`
-    );
+    const getClicksWS = new WebSocket(`ws://server.bykovski.de:8000/game/balance?token=${token}`);
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     getClicksWS.onmessage = (actClicks) => {
       let data = JSON.parse(actClicks.data);

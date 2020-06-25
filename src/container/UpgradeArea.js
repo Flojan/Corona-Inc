@@ -5,11 +5,11 @@ import clickersBackground from "../images/blackbackground.png";
 import IconButton from "../components/IconButton";
 
 export const UpgradesContainer = styled.div`
-  width: 450px;
-  height: 1000px;
+  width: 25vw;
+  height: 105vh;
   background-image: url(${clickersBackground});
-  left: 0px;
-  top: 50px;
+  left: 0vw;
+  top: 5vh;
   position: fixed;
 `;
 
@@ -30,7 +30,7 @@ const UpgradeArea = () => {
   const [cost, setCost] = useState(0); //Init über userData
 
   const upgrades = [
-    { text: "Erbrechen", icon: "erbrechen", id: "1" , cost: userData.cost },
+    { text: "Erbrechen", icon: "erbrechen", id: "1", cost: userData.cost },
     { text: "Husten", icon: "husten", id: "2", cost: userData.cost },
     { text: "Niesen", icon: "niesen", id: "3", cost: userData.cost },
     { text: "Voegel", icon: "vögel", id: "4", cost: userData.cost },
@@ -50,17 +50,17 @@ const UpgradeArea = () => {
     });
     let data = await response.json();
     console.log("Upgrade Data", data);
-    
+
     if (response.status === StatusCodeSuccessful) {
       const availiabeUpgradesUrl = upgradeUrl + "/available";
       const availableResponse = await fetch(availiabeUpgradesUrl, {
         method: "GET",
         headers: new Headers({
-          Authorization: `Bearer ${token}`
-        })
+          Authorization: `Bearer ${token}`,
+        }),
       });
       let availableUpgrades = await availableResponse.json();
-      // Ist noch ein Object. 
+      // Ist noch ein Object.
     }
 
     setCost(cost + 10);

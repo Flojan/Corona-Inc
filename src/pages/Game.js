@@ -11,21 +11,21 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background-size: cover;
-  left: 0px;
-  top: 0px;
+  left: 0vw;
+  top: 0vh;
   position: fixed;
 `;
 
 export const MenuBar = styled.div`
-  top: 0px;
-  width: 2000px;
-  height: 50px;
+  top: 0vh;
+  width: 130vw;
+  height: 5vh;
   background-image: url(${menubarBackground});
 `;
 
 export const ClickerContainer = styled.div`
-  left: 750px;
-  top: 0px;
+  left: 42vw;
+  top: 10vh;
   position: fixed;
 `;
 

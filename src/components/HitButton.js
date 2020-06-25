@@ -4,17 +4,14 @@ import backgroundImage from "../images/virusimage.png";
 
 export const StyledHitButton = styled.button`
   background: url(${backgroundImage});
-  background-position: center;
-  background-size: 200px;
+  /* background-position: center; */
+  background-size: 35vh;
   border: none;
-  text-align: center;
-  font-size: 16px;
-  width: 200px;
-  height: 200px;
-  margin: 5px;
-  border-radius: 50%;
+  width: 18vw;
+  height: 35vh;
+  /* margin: 5px; */
   &:hover {
-    width: 250px;
+    width: 40vh;
   }
 `;
 

@@ -5,8 +5,8 @@ import backgroundImage from "../images/greybackground.png";
 export const StyledIconButton = styled.button`
   background-image: url(${backgroundImage});
   position: relative;
-  width: 450px;
-  height: 60px;
+  width: 25vw;
+  height: 6vh;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -5,18 +5,18 @@ import clickersBackground from "../images/blackbackground.png";
 import IconButton from "../components/IconButton";
 
 export const GeneratorContainer = styled.div`
-  width: 450px;
-  height: 1000px;
+  width: 25vw;
+  height: 105vh;
   background-image: url(${clickersBackground});
-  left: 1310px;
-  top: 50px;
+  left: 75vw;
+  top: 5vh;
   position: fixed;
 `;
 
 export const StyledHeadlines = styled.h2`
   color: white;
-  left: 0px;
-  top: 0px;
+  left: 0vw;
+  top: 0vh;
   display: flex;
   justify-content: space-between;
 `;
