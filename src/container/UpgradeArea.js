@@ -33,7 +33,7 @@ const UpgradeArea = () => {
     { text: "Erbrechen", icon: "erbrechen", id: "1", cost: userData.cost },
     { text: "Husten", icon: "husten", id: "2", cost: userData.cost },
     { text: "Niesen", icon: "niesen", id: "3", cost: userData.cost },
-    { text: "Voegel", icon: "vögel", id: "4", cost: userData.cost },
+    { text: "Vögel", icon: "vögel", id: "4", cost: userData.cost },
     { text: "Ratten", icon: "ratten", id: "5", cost: userData.cost },
     { text: "Moskitos", icon: "moskitos", id: "6", cost: userData.cost },
     { text: "Luft", icon: "luft", id: "7", cost: userData.cost },
@@ -68,7 +68,7 @@ const UpgradeArea = () => {
 
   return (
     <UpgradesContainer>
-      <StyledHeadlines>Uebertragung</StyledHeadlines>
+      <StyledHeadlines>Übertragung</StyledHeadlines>
       {upgrades.map((upgrade, index) => {
         return (
           <IconButton
