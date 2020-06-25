@@ -2,11 +2,11 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 *{
     @font-face {
-        font-family: "exquisite_corpse";
-        src: url("fonts/exquisite_corpse.ttf?") format("truetype");
+        font-family: "ALPHD";
+        src: url("fonts/ALPHD.ttf?") format("truetype");
     }
-        font-family: exquisite_corpse;
-        font-weight: 5;
+        font-family: ALPHD;
+        font-weight: 8;
         /* font-size: 20px; */
     }
 `;
