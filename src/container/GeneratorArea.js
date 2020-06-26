@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useStoreState } from "easy-peasy";
 import clickersBackground from "../images/blackbackground.png";
@@ -25,10 +25,30 @@ const GeneratorArea = () => {
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
   const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
+  console.log("USERTOKINHO2", token);
+  const [curGenerators, setCurGenerators] = useState({});
   const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
   const [curAmount, setAmount] = useState(0); //State setzen über userData
   const [curNextPrice, setNextPrice] = useState(0);
+
+  const getCurrentGenerators = async () => {
+    const url = generatorUrl + "current-user";
+    const response = await fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+
+    let data = await response.json();
+    console.log("dataaaaaaa", data);
+    setCurGenerators(data);
+  };
+
+  useEffect(() => {
+    getCurrentGenerators();
+  }, []);
 
   if (userData.length !== 0) {
     console.log("userdataaa: ", userData[0].amount);
