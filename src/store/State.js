@@ -9,6 +9,7 @@ const userModel = {
   token: "",
   setToken: action((state, token) => {
     state.token = token;
+    console.log("Juli", token);
   }),
 };
 
@@ -27,6 +28,15 @@ const curUpgradesModel = {
     console.log("Upgrade DETAILS", details);
   }),
 };
+
+const curCPSModel = {
+  cps: 0,
+  setCurCPS: action((state, cps) => {
+    state.cps = cps;
+    console.log("CPS", cps);
+  }),
+};
+
 /**
  * in storeModel sind alle Storemodels gespeichert.
  */
@@ -34,6 +44,7 @@ const storeModel = {
   user: userModel,
   curGenerators: curGeneratorModel,
   curUpgrades: curUpgradesModel,
+  curCPS: curCPSModel,
 };
 
 export default storeModel;

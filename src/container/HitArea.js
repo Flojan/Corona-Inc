@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import HitButton from "../components/HitButton";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions, action } from "easy-peasy";
 
 export const StyledDiv = styled.div`
   margin: 40px 0 40px 0px;
@@ -18,6 +18,7 @@ const HitArea = () => {
   const [clickSocket, setClickSocket] = useState();
   const [genClickSocket, setGenClickSocket] = useState();
   const [getClickSocket, setGetClickSocket] = useState();
+  const setCPS = useStoreActions((actions) => actions.curCPS.setCurCPS);
 
   // token wird aus globalen State geholt
   const token = useStoreState((state) => state.user.token);
@@ -64,6 +65,7 @@ const HitArea = () => {
     genClicksWS.onmessage = (genClicks) => {
       let data = JSON.parse(genClicks.data);
       setVPS(data.points);
+      setCPS(data.points);
     };
     // Socket wird in State abgespeichert
     setGenClickSocket(genClicksWS);
