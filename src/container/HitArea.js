@@ -18,10 +18,10 @@ const HitArea = () => {
   const [clickSocket, setClickSocket] = useState();
   const [genClickSocket, setGenClickSocket] = useState();
   const [getClickSocket, setGetClickSocket] = useState();
+  const token = useStoreState((state) => state.user.token);
   const setCPS = useStoreActions((actions) => actions.curCPS.setCurCPS);
 
   // token wird aus globalen State geholt
-  const token = useStoreState((state) => state.user.token);
   //console.log("TOKEN", token);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist

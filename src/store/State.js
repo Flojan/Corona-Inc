@@ -9,7 +9,7 @@ const userModel = {
   token: "",
   setToken: action((state, token) => {
     state.token = token;
-    console.log("Juli", token);
+    
   }),
 };
 

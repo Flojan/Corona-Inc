@@ -25,13 +25,14 @@ const GeneratorArea = () => {
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
   const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
-  console.log("USERTOKINHO2", token);
   const [curGenerators, setCurGenerators] = useState({});
-  const userData = useStoreState((state) => state.curGenerators.details);
+  
+  //const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
   const [curAmount, setAmount] = useState(0); //State setzen über userData
   const [curNextPrice, setNextPrice] = useState(0);
-
+  const curCPS = useStoreState((state) => state.curCPS.cps);
+  
   const getCurrentGenerators = async () => {
     const url = generatorUrl + "current-user";
     const response = await fetch(url, {
@@ -40,42 +41,43 @@ const GeneratorArea = () => {
         Authorization: `Bearer ${token}`,
       }),
     });
-
     let data = await response.json();
-    console.log("dataaaaaaa", data);
+    //console.log("DATASF", data);
+    
     setCurGenerators(data);
   };
 
   useEffect(() => {
     getCurrentGenerators();
-  }, []);
+  }, [curCPS]);
 
-  if (userData.length !== 0) {
-    console.log("userdataaa: ", userData[0].amount);
+  if (curGenerators.length !== 0 && typeof curGenerators.length !== 'undefined') {
+    console.log("generator Amount ", curGenerators[0].amount);
   }
-
   const findUserGen = (id) => {
-    if (userData.length === 0) {
-      return;
+    if (curGenerators.length !== 0 && typeof curGenerators.length !== 'undefined') {
+      if (curGenerators.length === 0) {
+        return;
+      }
+      return curGenerators.find((userGen) => {
+        return userGen.generator.id === id;
+      });
     }
-    return userData.find((userGen) => {
-      return userGen.generator.id === id;
-    });
   };
-
+  
   const generators = [
-    { text: "Schlafstörung", icon: "schlafstörung", id: "1", amount: userData.amount },
-    { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2", amount: userData.amount },
-    { text: "Paranoia", icon: "paranoia", id: "3", amount: userData.amount },
-    { text: "Ausschlag", icon: "ausschlag", id: "4", amount: userData.amount },
-    { text: "Herzrasen", icon: "herzrasen", id: "5", amount: userData.amount },
-    { text: "Abzesse", icon: "abzesse", id: "6", amount: userData.amount },
-    { text: "Tumor", icon: "tumor", id: "12", amount: userData.amount },
-    { text: "Laehmung", icon: "lähmung", id: "7", amount: userData.amount },
-    { text: "Lungenentzündung", icon: "lungenentzündung", id: "8", amount: userData.amount },
-    { text: "Aneurysma", icon: "aneurysma", id: "9", amount: userData.amount },
-    { text: "Lungenfibrose", icon: "lungenfibrose", id: "10", amount: userData.amount },
-    { text: "Herzversagen", icon: "herzversagen", id: "11", amount: userData.amount },
+    { text: "Schlafstörung", icon: "schlafstörung", id: "1", amount: curGenerators.amount },
+    { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2", amount: curGenerators.amount },
+    { text: "Paranoia", icon: "paranoia", id: "3", amount: curGenerators.amount },
+    { text: "Ausschlag", icon: "ausschlag", id: "4", amount: curGenerators.amount },
+    { text: "Herzrasen", icon: "herzrasen", id: "5", amount: curGenerators.amount },
+    { text: "Abzesse", icon: "abzesse", id: "6", amount: curGenerators.amount },
+    { text: "Tumor", icon: "tumor", id: "12", amount: curGenerators.amount },
+    { text: "Laehmung", icon: "lähmung", id: "7", amount: curGenerators.amount },
+    { text: "Lungenentzündung", icon: "lungenentzündung", id: "8", amount: curGenerators.amount },
+    { text: "Aneurysma", icon: "aneurysma", id: "9", amount: curGenerators.amount },
+    { text: "Lungenfibrose", icon: "lungenfibrose", id: "10", amount: curGenerators.amount },
+    { text: "Herzversagen", icon: "herzversagen", id: "11", amount: curGenerators.amount },
   ];
 
   async function buyGenerator(id) {
@@ -109,7 +111,7 @@ const GeneratorArea = () => {
   // obejkt erstellen als State GenPrices =>
 
   let buttons = null;
-  if (userData) {
+  if (curGenerators) {
     buttons = [];
     for (const generator of generators) {
       const userGen = findUserGen(generator.id);
