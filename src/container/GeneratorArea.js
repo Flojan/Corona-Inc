@@ -26,36 +26,63 @@ const GeneratorArea = () => {
   const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
   const [curGenerators, setCurGenerators] = useState({});
-  
+
   //const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
   const [curAmount, setAmount] = useState(0); //State setzen über userData
-  const [curNextPrice, setNextPrice] = useState(0);
+  const [curNextGenPrices, setNextGenPrices] = useState({});
   const curCPS = useStoreState((state) => state.curCPS.cps);
-  
+
   const getCurrentGenerators = async () => {
-    const url = generatorUrl + "current-user";
-    const response = await fetch(url, {
+    const urlAllGens = generatorUrl + "current-user";
+    const responseAllGens = await fetch(urlAllGens, {
       method: "GET",
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
     });
-    let data = await response.json();
+    let data = await responseAllGens.json();
     //console.log("DATASF", data);
-    
     setCurGenerators(data);
+    if (curGenerators.length !== 0 && typeof curGenerators.length !== "undefined") {
+      for (const generator of curGenerators) {
+        console.log("malagga", generator.generator.id);
+        // console.log("malagga2 ", curGenerators);
+
+        const urlNextPrice = generatorUrl + generator.generator.id + "/next-price";
+        const responseNextPrice = await fetch(urlNextPrice, {
+          method: "GET",
+          headers: new Headers({
+            Authorization: `Bearer ${token}`,
+          }),
+        });
+
+        const nextPrice = await responseNextPrice.json();
+        console.log("price", typeof nextPrice);
+        console.log("malagga222", typeof generator.generator.id);
+
+        setNextGenPrices((prevState) => ({
+          curNextGenPrices: {
+            ...prevState.curNextGenPrices,
+            [generator.generator.id]: nextPrice,
+          },
+        }));
+        // setNextGenPrices({ ...curNextGenPrices, [generator.generator.id]: nextPrice });
+        // console.log("nextGenPrices: ", curNextGenPrices);
+      }
+    }
   };
 
   useEffect(() => {
     getCurrentGenerators();
   }, [curCPS]);
+  console.log("hier", curNextGenPrices);
 
-  if (curGenerators.length !== 0 && typeof curGenerators.length !== 'undefined') {
+  if (curGenerators.length !== 0 && typeof curGenerators.length !== "undefined") {
     console.log("generator Amount ", curGenerators[0].amount);
   }
   const findUserGen = (id) => {
-    if (curGenerators.length !== 0 && typeof curGenerators.length !== 'undefined') {
+    if (curGenerators.length !== 0 && typeof curGenerators.length !== "undefined") {
       if (curGenerators.length === 0) {
         return;
       }
@@ -64,20 +91,80 @@ const GeneratorArea = () => {
       });
     }
   };
-  
+
   const generators = [
-    { text: "Schlafstörung", icon: "schlafstörung", id: "1", amount: curGenerators.amount },
-    { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2", amount: curGenerators.amount },
-    { text: "Paranoia", icon: "paranoia", id: "3", amount: curGenerators.amount },
-    { text: "Ausschlag", icon: "ausschlag", id: "4", amount: curGenerators.amount },
-    { text: "Herzrasen", icon: "herzrasen", id: "5", amount: curGenerators.amount },
-    { text: "Abzesse", icon: "abzesse", id: "6", amount: curGenerators.amount },
-    { text: "Tumor", icon: "tumor", id: "12", amount: curGenerators.amount },
-    { text: "Laehmung", icon: "lähmung", id: "7", amount: curGenerators.amount },
-    { text: "Lungenentzündung", icon: "lungenentzündung", id: "8", amount: curGenerators.amount },
-    { text: "Aneurysma", icon: "aneurysma", id: "9", amount: curGenerators.amount },
-    { text: "Lungenfibrose", icon: "lungenfibrose", id: "10", amount: curGenerators.amount },
-    { text: "Herzversagen", icon: "herzversagen", id: "11", amount: curGenerators.amount },
+    {
+      text: "Schlafstörung",
+      icon: "schlafstörung",
+      id: "1",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Bauchschmerzen",
+      icon: "bauchschmerzen",
+      id: "2",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Paranoia",
+      icon: "paranoia",
+      id: "3",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Ausschlag",
+      icon: "ausschlag",
+      id: "4",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Herzrasen",
+      icon: "herzrasen",
+      id: "5",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Abzesse",
+      icon: "abzesse",
+      id: "6",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Tumor",
+      icon: "tumor",
+      id: "12",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Laehmung",
+      icon: "lähmung",
+      id: "7",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Lungenentzündung",
+      icon: "lungenentzündung",
+      id: "8",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Aneurysma",
+      icon: "aneurysma",
+      id: "9",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Lungenfibrose",
+      icon: "lungenfibrose",
+      id: "10",
+      amount: curGenerators.amount,
+    },
+    {
+      text: "Herzversagen",
+      icon: "herzversagen",
+      id: "11",
+      amount: curGenerators.amount,
+    },
   ];
 
   async function buyGenerator(id) {
@@ -94,18 +181,18 @@ const GeneratorArea = () => {
 
     let amount = data.amount; //Amount für current Generator
     setAmount(amount);
-    if (response.status === StatusCodeSuccessful) {
-      const nextPriceUrl = generatorUrl + id + "/next-price";
-      const nextPriceResponse = await fetch(nextPriceUrl, {
-        method: "GET",
-        headers: new Headers({
-          Authorization: `Bearer ${token}`,
-        }),
-      });
-      let nextPrice = await nextPriceResponse.json(); //Hier ist der Next Price drin
-      console.log(nextPrice);
-      setNextPrice(nextPrice);
-    }
+    // if (response.status === StatusCodeSuccessful) {
+    //   const nextPriceUrl = generatorUrl + id + "/next-price";
+    //   const nextPriceResponse = await fetch(nextPriceUrl, {
+    //     method: "GET",
+    //     headers: new Headers({
+    //       Authorization: `Bearer ${token}`,
+    //     }),
+    //   });
+    //   let nextPrice = await nextPriceResponse.json(); //Hier ist der Next Price drin
+    //   console.log(nextPrice);
+    //   setNextPrice(nextPrice);
+    // }
   }
 
   // obejkt erstellen als State GenPrices =>
@@ -118,13 +205,25 @@ const GeneratorArea = () => {
       if (!userGen) {
         continue;
       }
+      let genID = generator.id;
+      if (curNextGenPrices.curNextGenPrices) {
+        console.log("Der erste Key. ", Object.keys(curNextGenPrices.curNextGenPrices)[0]);
+        console.log("Erste Value. ", curNextGenPrices.curNextGenPrices[1]);
+      }
+
+      console.log("IDDD:", Object.keys(curNextGenPrices)[0]);
+
+      // for (const price of curNextGenPrices.curNextGenprices) {
+      //   console.log(price);
+      // }
+
       buttons.push(
         <IconButton
           key={generator.id}
           text={generator.text}
           icon={generator.icon}
           id={generator.id}
-          nextPrice={curNextPrice}
+          nextPrice={curNextGenPrices[generator.id] ? curNextGenPrices[generator.id] : "Loading..."}
           amount={userGen.amount}
           onClick={() => buyGenerator(generator.id)}
         />

@@ -9,7 +9,6 @@ const userModel = {
   token: "",
   setToken: action((state, token) => {
     state.token = token;
-    
   }),
 };
 
@@ -33,7 +32,7 @@ const curCPSModel = {
   cps: 0,
   setCurCPS: action((state, cps) => {
     state.cps = cps;
-    console.log("CPS", cps);
+    // console.log("CPS", cps);
   }),
 };
 
