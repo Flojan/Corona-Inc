@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import HitArea from "../container/HitArea";
 import containerBackground from "../images/greybackground2.png";
