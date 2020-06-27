@@ -26,6 +26,7 @@ const GeneratorArea = () => {
   // const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
   const [curGenerators, setCurGenerators] = useState({});
+  const [availableGens, setAvailableGens] = useState({});
   const [loading, setLoading] = useState(true);
 
   //const userData = useStoreState((state) => state.curGenerators.details);
@@ -34,6 +35,7 @@ const GeneratorArea = () => {
   const [curNextGenPrices, setNextGenPrices] = useState({});
   const curCPS = useStoreState((state) => state.curCPS.cps);
 
+  //TODO: in AvailableGeneratorState die nextPrice reinmappen. @Danni oder evtl auch anderstrum.
   useEffect(() => {
     const getCurrentGenerators = async () => {
       setLoading(true);
@@ -45,8 +47,23 @@ const GeneratorArea = () => {
         }),
       });
       let data = await responseAllGens.json();
+      console.log("data von den Gens als .json", data);
+
       setCurGenerators(data);
       setLoading(false);
+    };
+
+    const getAvailableGenerators = async () => {
+      const url = generatorUrl + "available";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
+      });
+      let availableGenerators = await response.json();
+      console.log("response als .data", availableGenerators);
+      setAvailableGens(availableGenerators);
     };
     const getNextGenPrices = async () => {
       console.log("curGensss", curGenerators);
@@ -76,6 +93,7 @@ const GeneratorArea = () => {
         }
       }
     };
+    getAvailableGenerators();
     getNextGenPrices();
     getCurrentGenerators();
   }, [curCPS]);
@@ -185,18 +203,6 @@ const GeneratorArea = () => {
 
     let amount = data.amount; //Amount für current Generator
     setAmount(amount);
-    // if (response.status === StatusCodeSuccessful) {
-    //   const nextPriceUrl = generatorUrl + id + "/next-price";
-    //   const nextPriceResponse = await fetch(nextPriceUrl, {
-    //     method: "GET",
-    //     headers: new Headers({
-    //       Authorization: `Bearer ${token}`,
-    //     }),
-    //   });
-    //   let nextPrice = await nextPriceResponse.json(); //Hier ist der Next Price drin
-    //   console.log(nextPrice);
-    //   setNextPrice(nextPrice);
-    // }
   }
 
   // obejkt erstellen als State GenPrices =>
