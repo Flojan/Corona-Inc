@@ -37,8 +37,12 @@ const LoginForm = () => {
 
   //GlobalStates für User-Token und current User Generators
   const setToken = useStoreActions((actions) => actions.user.setToken);
-  const setGenerators = useStoreActions((actions) => actions.curGenerators.setCurGenerator);
-  const setUpgrades = useStoreActions((actions) => actions.curUpgrades.setCurUpgrades);
+  const setGenerators = useStoreActions(
+    (actions) => actions.curGenerators.setCurGenerator
+  );
+  const setUpgrades = useStoreActions(
+    (actions) => actions.curUpgrades.setCurUpgrades
+  );
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
@@ -62,10 +66,13 @@ const LoginForm = () => {
   };
 
   const sendRegister = async (username, password) => {
-    const response = await fetch("http://server.bykovski.de:8000/users/register", {
-      method: "POST",
-      body: JSON.stringify({ username: username, password: password }),
-    });
+    const response = await fetch(
+      "http://server.bykovski.de:8000/users/register",
+      {
+        method: "POST",
+        body: JSON.stringify({ username: username, password: password }),
+      }
+    );
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Register successful");

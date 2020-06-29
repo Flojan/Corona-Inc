@@ -29,7 +29,7 @@ export const IconImage = styled.img`
   height: 5vh;
 `;
 
-const IconButton = ({ text, icon, nextPrice, amount, onClick }) => {
+const IconButton = ({ text, icon, cost, amount, onClick }) => {
   //console.log("IconButton -> icon", icon);
   const [count, setCount] = useState(0);
   const click = 1;
@@ -49,7 +49,7 @@ const IconButton = ({ text, icon, nextPrice, amount, onClick }) => {
       <IconImage src={require(`../images/icons/${icon}.png`)} />
       <StyledDiv>
         <span>{text}</span>
-        <span>{nextPrice}</span>
+        <span>{cost}</span>
       </StyledDiv>
       <StyledDiv>{amount}</StyledDiv>
     </StyledIconButton>

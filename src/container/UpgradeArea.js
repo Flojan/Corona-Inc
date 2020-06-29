@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useStoreState } from "easy-peasy";
 import clickersBackground from "../images/blackbackground.png";
@@ -23,21 +23,64 @@ export const StyledHeadlines = styled.h2`
 
 const UpgradeArea = () => {
   const upgradeUrl = "http://server.bykovski.de:8000/upgrades/";
-  const StatusCodeSuccessful = 200;
+
   const token = useStoreState((state) => state.user.token);
-  const userData = useStoreState((state) => state.curGenerators.details);
-  // Zugriff auf Amounts per userData[_generatorID_]
-  const [cost, setCost] = useState(0); //Init über userData
+  const [curUpgrades, setCurUpgrades] = useState({});
+  const [availableUpgs, setAvailableUpgs] = useState({});
+  const [curAmount, setAmount] = useState(0);
+  const curCPS = useStoreState((state) => state.curCPS.cps);
+
+  useEffect(() => {
+    const getCurrentUpgrades = async () => {
+      const urlAllUpgs = upgradeUrl + "current-user";
+      const responseAllUpgs = await fetch(urlAllUpgs, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
+      });
+      let data = await responseAllUpgs.json();
+      console.log("Upgrades Data", data);
+      setCurUpgrades(data);
+    };
+
+    const getAvailableUpgrades = async () => {
+      const url = upgradeUrl + "available";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
+      });
+      let availableUpgrades = await response.json();
+      console.log("response als .data", availableUpgrades);
+      setAvailableUpgs(availableUpgrades);
+    };
+
+    getCurrentUpgrades();
+    getAvailableUpgrades();
+  }, [curCPS]);
+
+  const findUserUpg = (id) => {
+    if (curUpgrades && typeof curUpgrades.length !== "undefined") {
+      if (curUpgrades.length === 0) {
+        return;
+      }
+      return curUpgrades.find((userUpg) => {
+        return userUpg.upgrade.id === id;
+      });
+    }
+  };
 
   const upgrades = [
-    { text: "Erbrechen", icon: "erbrechen", id: "1", cost: userData.cost },
-    { text: "Husten", icon: "husten", id: "2", cost: userData.cost },
-    { text: "Niesen", icon: "niesen", id: "3", cost: userData.cost },
-    { text: "Vögel", icon: "vögel", id: "4", cost: userData.cost },
-    { text: "Ratten", icon: "ratten", id: "5", cost: userData.cost },
-    { text: "Moskitos", icon: "moskitos", id: "6", cost: userData.cost },
-    { text: "Luft", icon: "luft", id: "7", cost: userData.cost },
-    { text: "Wasser", icon: "wasser", id: "8", cost: userData.cost },
+    { text: "Erbrechen", icon: "erbrechen", id: "1" },
+    { text: "Husten", icon: "husten", id: "2" },
+    { text: "Niesen", icon: "niesen", id: "3" },
+    { text: "Vögel", icon: "vögel", id: "4" },
+    { text: "Ratten", icon: "ratten", id: "5" },
+    { text: "Moskitos", icon: "moskitos", id: "6" },
+    { text: "Luft", icon: "luft", id: "7" },
+    { text: "Wasser", icon: "wasser", id: "8" },
   ];
 
   async function buyUpgrade(id) {
@@ -49,37 +92,40 @@ const UpgradeArea = () => {
       }),
     });
     let data = await response.json();
-    console.log("Upgrade Data", data);
+    let amount = data.amount;
+    setAmount(amount);
+  }
 
-    if (response.status === StatusCodeSuccessful) {
-      const availiabeUpgradesUrl = upgradeUrl + "/available";
-      const availableResponse = await fetch(availiabeUpgradesUrl, {
-        method: "GET",
-        headers: new Headers({
-          Authorization: `Bearer ${token}`,
-        }),
-      });
-      let availableUpgrades = await availableResponse.json();
-      // Ist noch ein Object.
+  let buttons = null;
+  if (curUpgrades) {
+    buttons = [];
+    for (const upgrade of upgrades) {
+      const userUpg = findUserUpg(upgrade.id);
+      if (!userUpg) {
+        continue;
+      }
+
+      console.log("UPGRADES amount:" + userUpg.amount);
+
+      buttons.push(
+        <IconButton
+          key={upgrade.id}
+          text={upgrade.text}
+          icon={upgrade.icon}
+          id={upgrade.id}
+          //cost={upgrade.cost}
+          cost={curUpgrades[0].upgrade.cost}
+          amount={1}
+          onClick={() => buyUpgrade(upgrade.id)}
+        />
+      );
     }
-
-    setCost(cost + 10);
   }
 
   return (
     <UpgradesContainer>
       <StyledHeadlines>Übertragung</StyledHeadlines>
-      {upgrades.map((upgrade, index) => {
-        return (
-          <IconButton
-            key={index}
-            text={upgrade.text}
-            icon={upgrade.icon}
-            id={upgrade.id}
-            onClick={() => buyUpgrade(upgrade.id)}
-          />
-        );
-      })}
+      {buttons}
     </UpgradesContainer>
   );
 };

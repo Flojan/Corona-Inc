@@ -4,7 +4,7 @@ import { useStoreState } from "easy-peasy";
 import clickersBackground from "../images/blackbackground.png";
 import IconButton from "../components/IconButton";
 
-export const GeneratorContainer = styled.div`
+export const GeneratorsContainer = styled.div`
   width: 25vw;
   height: 105vh;
   background-image: url(${clickersBackground});
@@ -65,12 +65,14 @@ const GeneratorArea = () => {
       console.log("response als .data", availableGenerators);
       setAvailableGens(availableGenerators);
     };
+
     const getNextGenPrices = async () => {
       console.log("curGensss", curGenerators);
 
       if (curGenerators && !loading) {
         for (const generator of curGenerators) {
-          const urlNextPrice = generatorUrl + generator.generator.id + "/next-price";
+          const urlNextPrice =
+            generatorUrl + generator.generator.id + "/next-price";
           const responseNextPrice = await fetch(urlNextPrice, {
             method: "GET",
             headers: new Headers({
@@ -103,6 +105,7 @@ const GeneratorArea = () => {
   if (!loading) {
     console.log("generator Amount ", curGenerators[0].amount);
   }
+
   const findUserGen = (id) => {
     if (curGenerators && typeof curGenerators.length !== "undefined") {
       if (curGenerators.length === 0) {
@@ -115,78 +118,18 @@ const GeneratorArea = () => {
   };
 
   const generators = [
-    {
-      text: "Schlafstörung",
-      icon: "schlafstörung",
-      id: "1",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Bauchschmerzen",
-      icon: "bauchschmerzen",
-      id: "2",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Paranoia",
-      icon: "paranoia",
-      id: "3",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Ausschlag",
-      icon: "ausschlag",
-      id: "4",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Herzrasen",
-      icon: "herzrasen",
-      id: "5",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Abzesse",
-      icon: "abzesse",
-      id: "6",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Tumor",
-      icon: "tumor",
-      id: "12",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Laehmung",
-      icon: "lähmung",
-      id: "7",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Lungenentzündung",
-      icon: "lungenentzündung",
-      id: "8",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Aneurysma",
-      icon: "aneurysma",
-      id: "9",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Lungenfibrose",
-      icon: "lungenfibrose",
-      id: "10",
-      amount: curGenerators.amount,
-    },
-    {
-      text: "Herzversagen",
-      icon: "herzversagen",
-      id: "11",
-      amount: curGenerators.amount,
-    },
+    { text: "Schlafstörung", icon: "schlafstörung", id: "1" },
+    { text: "Bauchschmerzen", icon: "bauchschmerzen", id: "2" },
+    { text: "Paranoia", icon: "paranoia", id: "3" },
+    { text: "Ausschlag", icon: "ausschlag", id: "4" },
+    { text: "Herzrasen", icon: "herzrasen", id: "5" },
+    { text: "Abzesse", icon: "abzesse", id: "6" },
+    { text: "Tumor", icon: "tumor", id: "12" },
+    { text: "Laehmung", icon: "lähmung", id: "7" },
+    { text: "Lungenentzündung", icon: "lungenentzündung", id: "8" },
+    { text: "Aneurysma", icon: "aneurysma", id: "9" },
+    { text: "Lungenfibrose", icon: "lungenfibrose", id: "10" },
+    { text: "Herzversagen", icon: "herzversagen", id: "11" },
   ];
 
   async function buyGenerator(id) {
@@ -217,19 +160,22 @@ const GeneratorArea = () => {
       }
       let genID = generator.id;
       if (curNextGenPrices.curNextGenPrices) {
-        console.log("Der erste Key. ", Object.keys(curNextGenPrices.curNextGenPrices)[0]);
+        console.log(
+          "Der erste Key. ",
+          Object.keys(curNextGenPrices.curNextGenPrices)[0]
+        );
         console.log("Erste Value. ", curNextGenPrices.curNextGenPrices[1]);
       }
 
       console.log("IDDD:", curNextGenPrices.curNextGenPrices);
-
+      console.log("GENERATORS amount:" + userGen.amount);
       buttons.push(
         <IconButton
           key={generator.id}
           text={generator.text}
           icon={generator.icon}
           id={generator.id}
-          nextPrice={
+          cost={
             curNextGenPrices.curNextGenPrices
               ? curNextGenPrices.curNextGenPrices[generator.id]
               : "Loading..."
@@ -242,10 +188,10 @@ const GeneratorArea = () => {
   }
 
   return (
-    <GeneratorContainer>
+    <GeneratorsContainer>
       <StyledHeadlines>Symptome</StyledHeadlines>
       {buttons}
-    </GeneratorContainer>
+    </GeneratorsContainer>
   );
 };
 
