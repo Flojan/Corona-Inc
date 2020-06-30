@@ -47,6 +47,7 @@ const HitArea = () => {
     getClicksWS.onmessage = (actClicks) => {
       let data = JSON.parse(actClicks.data);
       setCount(data.points);
+      setCPS(data.points);
     };
     // Socket wird in State abgespeichert
     setGetClickSocket(getClicksWS);
@@ -65,7 +66,6 @@ const HitArea = () => {
     genClicksWS.onmessage = (genClicks) => {
       let data = JSON.parse(genClicks.data);
       setVPS(data.points);
-      setCPS(data.points);
     };
     // Socket wird in State abgespeichert
     setGenClickSocket(genClicksWS);

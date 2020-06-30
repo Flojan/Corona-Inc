@@ -61,13 +61,24 @@ const UpgradeArea = () => {
     getAvailableUpgrades();
   }, [curCPS]);
 
-  const findUserUpg = (id) => {
+  const findCurUpgs = (id) => {
     if (curUpgrades && typeof curUpgrades.length !== "undefined") {
       if (curUpgrades.length === 0) {
         return;
       }
-      return curUpgrades.find((userUpg) => {
-        return userUpg.upgrade.id === id;
+      return curUpgrades.find((curUpgs) => {
+        return curUpgs.id === id;
+      });
+    }
+  };
+
+  const findAvailableUpgs = (id) => {
+    if (availableUpgs && typeof availableUpgs.length !== "undefined") {
+      if (availableUpgs.length === 0) {
+        return;
+      }
+      return availableUpgs.find((availUpgs) => {
+        return availUpgs.id === id;
       });
     }
   };
@@ -97,15 +108,15 @@ const UpgradeArea = () => {
   }
 
   let buttons = null;
-  if (curUpgrades) {
+  if (availableUpgs) {
     buttons = [];
     for (const upgrade of upgrades) {
-      const userUpg = findUserUpg(upgrade.id);
-      if (!userUpg) {
+      const availUpg = findAvailableUpgs(upgrade.id);
+      if (!availUpg) {
         continue;
       }
 
-      console.log("UPGRADES amount:" + userUpg.amount);
+      console.log("UPGRADES :", availUpg.cost);
 
       buttons.push(
         <IconButton
@@ -114,7 +125,7 @@ const UpgradeArea = () => {
           icon={upgrade.icon}
           id={upgrade.id}
           //cost={upgrade.cost}
-          cost={curUpgrades[0].upgrade.cost}
+          cost={availUpg.cost}
           amount={1}
           onClick={() => buyUpgrade(upgrade.id)}
         />

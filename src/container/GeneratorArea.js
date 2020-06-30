@@ -27,18 +27,24 @@ const GeneratorArea = () => {
   const token = useStoreState((state) => state.user.token);
   const [curGenerators, setCurGenerators] = useState({});
   const [availableGens, setAvailableGens] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [curGensLoading, setCurGensLoading] = useState(true);
+  const [availGensLoading, setAvailGensLoading] = useState(true);
 
   //const userData = useStoreState((state) => state.curGenerators.details);
   // Zugriff auf Amounts per userData[_generatorID_]
   const [curAmount, setAmount] = useState(0); //State setzen über userData
   const [curNextGenPrices, setNextGenPrices] = useState({});
   const curCPS = useStoreState((state) => state.curCPS.cps);
+  let intervall = 0;
+
+  setInterval(() => {
+    intervall++;
+  }, 1000);
 
   //TODO: in AvailableGeneratorState die nextPrice reinmappen. @Danni oder evtl auch anderstrum.
   useEffect(() => {
     const getCurrentGenerators = async () => {
-      setLoading(true);
+      setCurGensLoading(true);
       const urlAllGens = generatorUrl + "current-user";
       const responseAllGens = await fetch(urlAllGens, {
         method: "GET",
@@ -50,10 +56,11 @@ const GeneratorArea = () => {
       console.log("data von den Gens als .json", data);
 
       setCurGenerators(data);
-      setLoading(false);
+      setCurGensLoading(false);
     };
 
     const getAvailableGenerators = async () => {
+      setAvailGensLoading(true);
       const url = generatorUrl + "available";
       const response = await fetch(url, {
         method: "GET",
@@ -64,15 +71,16 @@ const GeneratorArea = () => {
       let availableGenerators = await response.json();
       console.log("response als .data", availableGenerators);
       setAvailableGens(availableGenerators);
+      setAvailGensLoading(false);
     };
 
+    // von curGen auf availGen ändern
     const getNextGenPrices = async () => {
       console.log("curGensss", curGenerators);
 
-      if (curGenerators && !loading) {
-        for (const generator of curGenerators) {
-          const urlNextPrice =
-            generatorUrl + generator.generator.id + "/next-price";
+      if (availableGens && !availGensLoading) {
+        for (const generator of availableGens) {
+          const urlNextPrice = generatorUrl + generator.id + "/next-price";
           const responseNextPrice = await fetch(urlNextPrice, {
             method: "GET",
             headers: new Headers({
@@ -82,16 +90,16 @@ const GeneratorArea = () => {
 
           const nextPrice = await responseNextPrice.json();
           console.log("price", typeof nextPrice);
-          console.log("malagga222", typeof generator.generator.id);
+          console.log("malagga222", typeof generator.id);
 
           setNextGenPrices((prevState) => ({
             curNextGenPrices: {
               ...prevState.curNextGenPrices,
-              [generator.generator.id]: nextPrice,
+              [generator.id]: nextPrice,
             },
           }));
 
-          //setNextGenPrices({ ...curNextGenPrices, [generator.generator.id]: nextPrice });
+          // setNextGenPrices({ ...curNextGenPrices, [generator.id]: nextPrice });
         }
       }
     };
@@ -102,9 +110,9 @@ const GeneratorArea = () => {
 
   console.log("nextGenPrices: ", curNextGenPrices);
 
-  if (!loading) {
-    console.log("generator Amount ", curGenerators[0].amount);
-  }
+  // if (!loading) {
+  //   console.log("generator Amount ", curGenerators[0].amount);
+  // }
 
   const findUserGen = (id) => {
     if (curGenerators && typeof curGenerators.length !== "undefined") {
@@ -113,6 +121,30 @@ const GeneratorArea = () => {
       }
       return curGenerators.find((userGen) => {
         return userGen.generator.id === id;
+      });
+    }
+  };
+
+  const findAvailableGen = (id) => {
+    if (availableGens && typeof availableGens.length !== "undefined") {
+      if (availableGens.length === 0) {
+        return;
+      }
+      return availableGens.find((availGen) => {
+        return availGen.id === id;
+      });
+    }
+  };
+
+  const findAmountGen = (id) => {
+    if (curGenerators && typeof curGenerators.length !== "undefined") {
+      if (curGenerators.length === 0) {
+        return;
+      }
+      return curGenerators.find((userGen) => {
+        if (userGen.generator.id === id) {
+          return userGen.amount;
+        }
       });
     }
   };
@@ -148,27 +180,25 @@ const GeneratorArea = () => {
     setAmount(amount);
   }
 
-  // obejkt erstellen als State GenPrices =>
+  // objekt erstellen als State GenPrices =>
 
   let buttons = null;
-  if (curGenerators) {
+  if (availableGens) {
     buttons = [];
     for (const generator of generators) {
-      const userGen = findUserGen(generator.id);
-      if (!userGen) {
+      const curGen = findUserGen(generator.id);
+      const availGen = findAvailableGen(generator.id);
+      if (!availGen) {
         continue;
       }
       let genID = generator.id;
       if (curNextGenPrices.curNextGenPrices) {
-        console.log(
-          "Der erste Key. ",
-          Object.keys(curNextGenPrices.curNextGenPrices)[0]
-        );
+        console.log("Der erste Key. ", Object.keys(curNextGenPrices.curNextGenPrices)[0]);
         console.log("Erste Value. ", curNextGenPrices.curNextGenPrices[1]);
       }
 
       console.log("IDDD:", curNextGenPrices.curNextGenPrices);
-      console.log("GENERATORS amount:" + userGen.amount);
+      //console.log("GENERATORS amount:" + userGen.amount);
       buttons.push(
         <IconButton
           key={generator.id}
@@ -177,10 +207,10 @@ const GeneratorArea = () => {
           id={generator.id}
           cost={
             curNextGenPrices.curNextGenPrices
-              ? curNextGenPrices.curNextGenPrices[generator.id]
+              ? curNextGenPrices.curNextGenPrices[availGen.id]
               : "Loading..."
           }
-          amount={userGen.amount}
+          amount={typeof curGen === "undefined" ? 0 : curGen.amount} // setCurGensLoading statt undefined
           onClick={() => buyGenerator(generator.id)}
         />
       );

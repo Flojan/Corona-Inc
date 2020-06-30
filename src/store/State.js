@@ -16,7 +16,7 @@ const curGeneratorModel = {
   details: [],
   setCurGenerator: action((state, details) => {
     state.details = details;
-    console.log("Genreator DETAILS", details[0].amount);
+    // console.log("Genreator DETAILS", details[0].amount);
   }),
 };
 
@@ -24,7 +24,7 @@ const curUpgradesModel = {
   details: [],
   setCurUpgrades: action((state, details) => {
     state.details = details;
-    console.log("Upgrade DETAILS", details);
+    // console.log("Upgrade DETAILS", details);
   }),
 };
 
