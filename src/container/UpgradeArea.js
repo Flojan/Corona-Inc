@@ -67,7 +67,7 @@ const UpgradeArea = () => {
         return;
       }
       return curUpgrades.find((curUpgs) => {
-        return curUpgs.id === id;
+        return curUpgs.upgrade.id === id;
       });
     }
   };
@@ -107,27 +107,48 @@ const UpgradeArea = () => {
     setAmount(amount);
   }
 
-  let buttons = null;
+  let availButtons = null;
+  let curButtons = null;
+
   if (availableUpgs) {
-    buttons = [];
+    availButtons = [];
     for (const upgrade of upgrades) {
       const availUpg = findAvailableUpgs(upgrade.id);
       if (!availUpg) {
         continue;
       }
 
-      console.log("UPGRADES :", availUpg.cost);
-
-      buttons.push(
+      availButtons.push(
         <IconButton
           key={upgrade.id}
           text={upgrade.text}
           icon={upgrade.icon}
           id={upgrade.id}
-          //cost={upgrade.cost}
           cost={availUpg.cost}
-          amount={1}
+          amount={"Inaktiv"}
           onClick={() => buyUpgrade(upgrade.id)}
+        />
+      );
+    }
+  }
+
+  if (curUpgrades) {
+    curButtons = [];
+    for (const upgrade of upgrades) {
+      const curUpg = findCurUpgs(upgrade.id);
+      if (!curUpg) {
+        continue;
+      }
+
+      curButtons.push(
+        <IconButton
+          key={upgrade.id}
+          text={upgrade.text}
+          icon={upgrade.icon}
+          id={upgrade.id}
+          cost={curUpg.upgrade.cost}
+          amount={"Aktiv"}
+          onClick={() => {}}
         />
       );
     }
@@ -136,7 +157,8 @@ const UpgradeArea = () => {
   return (
     <UpgradesContainer>
       <StyledHeadlines>Übertragung</StyledHeadlines>
-      {buttons}
+      {curButtons}
+      {availButtons}
     </UpgradesContainer>
   );
 };
