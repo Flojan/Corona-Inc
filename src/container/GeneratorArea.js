@@ -23,28 +23,17 @@ export const StyledHeadlines = styled.h2`
 
 const GeneratorArea = () => {
   const generatorUrl = "http://server.bykovski.de:8000/generators/";
-  // const StatusCodeSuccessful = 200;
   const token = useStoreState((state) => state.user.token);
   const [curGenerators, setCurGenerators] = useState({});
   const [availableGens, setAvailableGens] = useState({});
   const [curGensLoading, setCurGensLoading] = useState(true);
   const [availGensLoading, setAvailGensLoading] = useState(true);
-
-  //const userData = useStoreState((state) => state.curGenerators.details);
-  // Zugriff auf Amounts per userData[_generatorID_]
-  const [curAmount, setAmount] = useState(0); //State setzen über userData
   const [curNextGenPrices, setNextGenPrices] = useState({});
+  const curClicks = useStoreState((state) => state.curClicks.clicks);
   const curCPS = useStoreState((state) => state.curCPS.cps);
-  let intervall = 0;
 
-  setInterval(() => {
-    intervall++;
-  }, 1000);
-
-  //TODO: in AvailableGeneratorState die nextPrice reinmappen. @Danni oder evtl auch anderstrum.
   useEffect(() => {
     const getCurrentGenerators = async () => {
-      setCurGensLoading(true);
       const urlAllGens = generatorUrl + "current-user";
       const responseAllGens = await fetch(urlAllGens, {
         method: "GET",
@@ -53,14 +42,11 @@ const GeneratorArea = () => {
         }),
       });
       let data = await responseAllGens.json();
-      console.log("data von den Gens als .json", data);
-
       setCurGenerators(data);
       setCurGensLoading(false);
     };
 
     const getAvailableGenerators = async () => {
-      setAvailGensLoading(true);
       const url = generatorUrl + "available";
       const response = await fetch(url, {
         method: "GET",
@@ -69,15 +55,12 @@ const GeneratorArea = () => {
         }),
       });
       let availableGenerators = await response.json();
-      console.log("response als .data", availableGenerators);
       setAvailableGens(availableGenerators);
       setAvailGensLoading(false);
     };
 
     // von curGen auf availGen ändern
     const getNextGenPrices = async () => {
-      console.log("curGensss", curGenerators);
-
       if (availableGens && !availGensLoading) {
         for (const generator of availableGens) {
           const urlNextPrice = generatorUrl + generator.id + "/next-price";
@@ -89,8 +72,6 @@ const GeneratorArea = () => {
           });
 
           const nextPrice = await responseNextPrice.json();
-          console.log("price", typeof nextPrice);
-          console.log("malagga222", typeof generator.id);
 
           setNextGenPrices((prevState) => ({
             curNextGenPrices: {
@@ -98,24 +79,16 @@ const GeneratorArea = () => {
               [generator.id]: nextPrice,
             },
           }));
-
-          // setNextGenPrices({ ...curNextGenPrices, [generator.id]: nextPrice });
         }
       }
     };
     getAvailableGenerators();
     getNextGenPrices();
     getCurrentGenerators();
-  }, [curCPS]);
-
-  console.log("nextGenPrices: ", curNextGenPrices);
-
-  // if (!loading) {
-  //   console.log("generator Amount ", curGenerators[0].amount);
-  // }
+  }, [curClicks]);
 
   const findUserGen = (id) => {
-    if (curGenerators && typeof curGenerators.length !== "undefined") {
+    if (curGenerators && !curGensLoading) {
       if (curGenerators.length === 0) {
         return;
       }
@@ -126,25 +99,12 @@ const GeneratorArea = () => {
   };
 
   const findAvailableGen = (id) => {
-    if (availableGens && typeof availableGens.length !== "undefined") {
+    if (availableGens && !availGensLoading) {
       if (availableGens.length === 0) {
         return;
       }
       return availableGens.find((availGen) => {
         return availGen.id === id;
-      });
-    }
-  };
-
-  const findAmountGen = (id) => {
-    if (curGenerators && typeof curGenerators.length !== "undefined") {
-      if (curGenerators.length === 0) {
-        return;
-      }
-      return curGenerators.find((userGen) => {
-        if (userGen.generator.id === id) {
-          return userGen.amount;
-        }
       });
     }
   };
@@ -172,12 +132,7 @@ const GeneratorArea = () => {
         Authorization: `Bearer ${token}`,
       }),
     });
-    //console.log("Buy Gen Server Response", await response.json());
     let data = await response.json();
-    console.log(data.amount); // hier erhalte ich auch den amount
-
-    let amount = data.amount; //Amount für current Generator
-    setAmount(amount);
   }
 
   // objekt erstellen als State GenPrices =>
@@ -191,14 +146,8 @@ const GeneratorArea = () => {
       if (!availGen) {
         continue;
       }
-      let genID = generator.id;
       if (curNextGenPrices.curNextGenPrices) {
-        console.log("Der erste Key. ", Object.keys(curNextGenPrices.curNextGenPrices)[0]);
-        console.log("Erste Value. ", curNextGenPrices.curNextGenPrices[1]);
       }
-
-      console.log("IDDD:", curNextGenPrices.curNextGenPrices);
-      //console.log("GENERATORS amount:" + userGen.amount);
       buttons.push(
         <IconButton
           key={generator.id}
@@ -210,7 +159,7 @@ const GeneratorArea = () => {
               ? curNextGenPrices.curNextGenPrices[availGen.id]
               : "Loading..."
           }
-          amount={typeof curGen === "undefined" ? 0 : curGen.amount} // setCurGensLoading statt undefined
+          amount={typeof curGen === "undefined" ? 0 : curGen.amount}
           onClick={() => buyGenerator(generator.id)}
         />
       );

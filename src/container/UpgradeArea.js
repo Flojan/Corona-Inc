@@ -28,7 +28,7 @@ const UpgradeArea = () => {
   const [curUpgrades, setCurUpgrades] = useState({});
   const [availableUpgs, setAvailableUpgs] = useState({});
   const [curAmount, setAmount] = useState(0);
-  const curCPS = useStoreState((state) => state.curCPS.cps);
+  const curClicks = useStoreState((state) => state.curClicks.clicks);
 
   useEffect(() => {
     const getCurrentUpgrades = async () => {
@@ -40,7 +40,7 @@ const UpgradeArea = () => {
         }),
       });
       let data = await responseAllUpgs.json();
-      console.log("Upgrades Data", data);
+      //console.log("Upgrades Data", data);
       setCurUpgrades(data);
     };
 
@@ -53,13 +53,13 @@ const UpgradeArea = () => {
         }),
       });
       let availableUpgrades = await response.json();
-      console.log("response als .data", availableUpgrades);
+      //console.log("response als .data", availableUpgrades);
       setAvailableUpgs(availableUpgrades);
     };
 
     getCurrentUpgrades();
     getAvailableUpgrades();
-  }, [curCPS]);
+  }, [curClicks]);
 
   const findCurUpgs = (id) => {
     if (curUpgrades && typeof curUpgrades.length !== "undefined") {

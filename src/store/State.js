@@ -12,19 +12,10 @@ const userModel = {
   }),
 };
 
-const curGeneratorModel = {
-  details: [],
-  setCurGenerator: action((state, details) => {
-    state.details = details;
-    // console.log("Genreator DETAILS", details[0].amount);
-  }),
-};
-
-const curUpgradesModel = {
-  details: [],
-  setCurUpgrades: action((state, details) => {
-    state.details = details;
-    // console.log("Upgrade DETAILS", details);
+const curClicksModel = {
+  click: 0,
+  setCurClicks: action((state, clicks) => {
+    state.clicks = clicks;
   }),
 };
 
@@ -32,17 +23,12 @@ const curCPSModel = {
   cps: 0,
   setCurCPS: action((state, cps) => {
     state.cps = cps;
-    // console.log("CPS", cps);
   }),
 };
 
-/**
- * in storeModel sind alle Storemodels gespeichert.
- */
 const storeModel = {
   user: userModel,
-  curGenerators: curGeneratorModel,
-  curUpgrades: curUpgradesModel,
+  curClicks: curClicksModel,
   curCPS: curCPSModel,
 };
 

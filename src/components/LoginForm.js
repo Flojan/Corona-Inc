@@ -4,7 +4,7 @@ import TextInput from "./TextInput";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Useralert from "./Useralert";
-import { useStoreActions, action } from "easy-peasy";
+import { useStoreActions } from "easy-peasy";
 
 export const StyledForm = styled.form`
   h1 {
@@ -37,30 +37,18 @@ const LoginForm = () => {
 
   //GlobalStates für User-Token und current User Generators
   const setToken = useStoreActions((actions) => actions.user.setToken);
-  const setGenerators = useStoreActions(
-    (actions) => actions.curGenerators.setCurGenerator
-  );
-  const setUpgrades = useStoreActions(
-    (actions) => actions.curUpgrades.setCurUpgrades
-  );
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
 
   //Methode um der Click auf Register zu behandeln
   const onRegisterClick = (event) => {
-    console.log("Register geklickt");
     event.preventDefault(); //Damit die Seite geladen wird nach dem Klick
-    /**
-     * Auf Tipp von Max statt <Link> um die Buttons zu machen(was nicht so super funktioniert hat)
-     * https://reacttraining.com/react-router/web/api/Hooks/usehistory
-     */
     sendRegister(username, password);
   };
 
   //Methode um den Login Click zu handeln
   const onLoginClick = (event) => {
-    console.log("Login geklickt");
     event.preventDefault(); //Damit die Seite geladen wird nach dem Klick
     sendLogin(username, password);
   };
@@ -102,13 +90,9 @@ const LoginForm = () => {
     if (response.status === StatusCodeSuccessful) {
       setAlertType(true);
       setInfoAlert("Login successful");
-
-      //Token
       actJWT = await response.json();
       actJWT = actJWT.access_token;
       setToken(actJWT); // Setzen des Usertokens
-      getCurrentGenerators();
-      getCurrentUpgrades();
       setTimeout(() => {
         history.push("/game");
       }, 1000);
@@ -116,30 +100,6 @@ const LoginForm = () => {
       setAlertType(true);
       setInfoAlert("Login failed");
     }
-  };
-
-  const getCurrentUpgrades = async () => {
-    const url = "http://server.bykovski.de:8000/upgrades/current-user";
-    const response = await fetch(url, {
-      method: "GET",
-      headers: new Headers({
-        Authorization: `Bearer ${actJWT}`,
-      }),
-    });
-    let data = await response.json();
-    setUpgrades(data);
-  };
-
-  const getCurrentGenerators = async () => {
-    const url = "http://server.bykovski.de:8000/generators/current-user";
-    const response = await fetch(url, {
-      method: "GET",
-      headers: new Headers({
-        Authorization: `Bearer ${actJWT}`,
-      }),
-    });
-    let data = await response.json();
-    setGenerators(data);
   };
 
   return (
@@ -161,7 +121,6 @@ const LoginForm = () => {
       <ButtonContainer>
         <Button onClick={onRegisterClick}>Register</Button>
         <Button onClick={onLoginClick}>Login</Button>
-        <Button> Test </Button>
       </ButtonContainer>
       <Useralert type={alertType} info={infoAlert}></Useralert>
     </StyledForm>

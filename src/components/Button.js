@@ -1,10 +1,11 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 export const StyledButton = styled.button`
   background-color: red;
   color: black;
-  border: none;
+  border: 0;
+  outline: none;
   padding: 15px 30px;
   text-align: center;
   font-size: 16px;

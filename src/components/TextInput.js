@@ -11,9 +11,13 @@ export const StyledInput = styled.input`
   font-size: 14px;
 `;
 
-// Der "Klasse" braucht alle Attribute die so verwendet werden. 
 const TextInput = ({ type, id, placeholder, onChange }) => (
-  <StyledInput type={type} id={id} placeholder={placeholder} onChange={onChange} />
+  <StyledInput
+    type={type}
+    id={id}
+    placeholder={placeholder}
+    onChange={onChange}
+  />
 );
 
 export default TextInput;

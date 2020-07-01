@@ -26,7 +26,6 @@ export const FormContainer = styled.div`
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 `;
 
-// File kann man raus kicken weil hier nicht viel passieren wird.
 const Login = () => {
   sessionStorage.removeItem("token");
   return (
@@ -39,6 +38,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// funktion login
-// funktionen
