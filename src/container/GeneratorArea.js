@@ -135,6 +135,10 @@ const GeneratorArea = () => {
     let data = await response.json();
   }
 
+  const formatNumber = (num) => {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  };
+
   // objekt erstellen als State GenPrices =>
 
   let buttons = null;

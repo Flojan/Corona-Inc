@@ -5,6 +5,7 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 
 export const StyledDiv = styled.div`
   margin: 40px 0 40px 0px;
+  font-size: 26px;
 `;
 
 const HitArea = () => {
@@ -82,12 +83,16 @@ const HitArea = () => {
     clickSocket.send("click");
   };
 
+  const formatNumber = (num) => {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  };
+
   return (
     <StyledDiv>
       <HitButton onClick={onHitClick}>{clicks}</HitButton>
-      <h3>Viren insgesamt: {clicks}</h3>
-      <h3>Viren pro Sekunde: {cps}</h3>
-      <h3>Viren pro Click: {cpc}</h3>
+      <p>Viren insgesamt: {clicks ? formatNumber(clicks) : 0}</p>
+      <p>Viren pro Sekunde: {cps ? formatNumber(cps) : 0}</p>
+      <p>Viren pro Click: {cpc ? formatNumber(cpc) : 0}</p>
     </StyledDiv>
   );
 };

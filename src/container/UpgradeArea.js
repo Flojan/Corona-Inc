@@ -107,6 +107,10 @@ const UpgradeArea = () => {
     setAmount(amount);
   }
 
+  const formatNumber = (num) => {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  };
+
   let availButtons = null;
   let curButtons = null;
 
@@ -124,7 +128,7 @@ const UpgradeArea = () => {
           text={upgrade.text}
           icon={upgrade.icon}
           id={upgrade.id}
-          cost={availUpg.cost}
+          cost={availUpg.cost ? formatNumber(availUpg.cost) : 0}
           amount={"Inaktiv"}
           onClick={() => buyUpgrade(upgrade.id)}
         />
@@ -146,7 +150,7 @@ const UpgradeArea = () => {
           text={upgrade.text}
           icon={upgrade.icon}
           id={upgrade.id}
-          cost={curUpg.upgrade.cost}
+          cost={curUpg.upgrade.cost ? formatNumber(curUpg.upgrade.cost) : 0}
           amount={"Aktiv"}
           onClick={() => {}}
         />

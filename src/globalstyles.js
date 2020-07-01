@@ -7,6 +7,8 @@ const GlobalStyle = createGlobalStyle`
     }
         font-family: ALPHD;
         font-weight: 8;
+        letter-spacing: 1.5px;
+
         /* font-size: 20px; */
     }
 `;
