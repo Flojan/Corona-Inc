@@ -27,7 +27,6 @@ export const FormContainer = styled.div`
 `;
 
 const Login = () => {
-  sessionStorage.removeItem("token");
   return (
     <Container>
       <FormContainer>

@@ -26,10 +26,18 @@ const curCPSModel = {
   }),
 };
 
+const curUsernameModel = {
+  username: "",
+  setCurUsername: action((state, username) => {
+    state.username = username;
+  }),
+};
+
 const storeModel = {
   user: userModel,
   curClicks: curClicksModel,
   curCPS: curCPSModel,
+  curUsername: curUsernameModel
 };
 
 export default storeModel;

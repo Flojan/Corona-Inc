@@ -5,6 +5,7 @@ import containerBackground from "../images/greybackground2.png";
 import menubarBackground from "../images/coronaincbackground2.png";
 import GeneratorArea from "../container/GeneratorArea";
 import UpgradeArea from "../container/UpgradeArea";
+import { useStoreState } from "easy-peasy";
 
 export const Container = styled.div`
   background-image: url(${containerBackground});
@@ -21,12 +22,21 @@ export const MenuBar = styled.div`
   width: 130vw;
   height: 5vh;
   background-image: url(${menubarBackground});
+  color: white;
+  position: fixed;
 `;
 
 const Game = () => {
+  const username = useStoreState((state) => state.curUsername.username);
+  console.log("USERNAME", username);
+  if (!username) {
+    return null;
+  }
   return (
     <Container>
-      <MenuBar></MenuBar>
+      <MenuBar>
+        <h3>{"Willkommen " + username}</h3>
+      </MenuBar>
       <GeneratorArea></GeneratorArea>
       <UpgradeArea></UpgradeArea>
       <HitArea></HitArea>

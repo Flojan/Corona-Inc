@@ -37,6 +37,7 @@ const LoginForm = () => {
 
   //GlobalStates für User-Token und current User Generators
   const setToken = useStoreActions((actions) => actions.user.setToken);
+  const setUsernameGlobal = useStoreActions((actions) => actions.curUsername.setCurUsername);
   let actJWT = "";
   let history = useHistory();
   const StatusCodeSuccessful = 200;
@@ -93,6 +94,7 @@ const LoginForm = () => {
       actJWT = await response.json();
       actJWT = actJWT.access_token;
       setToken(actJWT); // Setzen des Usertokens
+      setUsernameGlobal(username);
       setTimeout(() => {
         history.push("/game");
       }, 1000);
