@@ -23,21 +23,13 @@ export const MenuBar = styled.div`
   background-image: url(${menubarBackground});
 `;
 
-export const ClickerContainer = styled.div`
-  left: 42vw;
-  top: 10vh;
-  position: fixed;
-`;
-
 const Game = () => {
   return (
     <Container>
       <MenuBar></MenuBar>
       <GeneratorArea></GeneratorArea>
       <UpgradeArea></UpgradeArea>
-      <ClickerContainer>
-        <HitArea></HitArea>
-      </ClickerContainer>
+      <HitArea></HitArea>
     </Container>
   );
 };

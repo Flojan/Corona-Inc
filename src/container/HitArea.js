@@ -6,6 +6,12 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 export const StyledDiv = styled.div`
   margin: 40px 0 40px 0px;
   font-size: 26px;
+  left: 25vw;
+  top: 10%;
+  position: absolute;
+  text-align: center;
+  width: 50vw;
+  height: 100vh;
 `;
 
 const HitArea = () => {
@@ -13,6 +19,8 @@ const HitArea = () => {
   // const [vps, setVPS] = useState(0);
   const [cpc, setCPC] = useState(0);
   const [clickSocket, setClickSocket] = useState();
+  const [sessionClicks, setSessionClicks] = useState(1);
+  const [sessionViren, setSessionViren] = useState(cpc);
   const [genClickSocket, setGenClickSocket] = useState();
   const [getClickSocket, setGetClickSocket] = useState();
   const token = useStoreState((state) => state.user.token);
@@ -80,6 +88,11 @@ const HitArea = () => {
 
   //Methode um den Hit Click zu handeln und schickt click an den WebSocket
   const onHitClick = async (event) => {
+    setSessionClicks(sessionClicks + 1);
+    console.log(sessionClicks);
+    setSessionViren(cpc * sessionClicks);
+    console.log(sessionViren);
+
     clickSocket.send("click");
   };
 
@@ -89,10 +102,13 @@ const HitArea = () => {
 
   return (
     <StyledDiv>
-      <HitButton onClick={onHitClick}>{clicks}</HitButton>
+      <HitButton onClick={onHitClick} />
       <p>Viren insgesamt: {clicks ? formatNumber(clicks) : 0}</p>
       <p>Viren pro Sekunde: {cps ? formatNumber(cps) : 0}</p>
       <p>Viren pro Click: {cpc ? formatNumber(cpc) : 0}</p>
+      <p>
+        Click-Viren pro Session: {sessionViren ? formatNumber(sessionViren) : 0}
+      </p>
     </StyledDiv>
   );
 };

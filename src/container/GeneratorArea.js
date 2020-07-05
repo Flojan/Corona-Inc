@@ -161,6 +161,8 @@ const GeneratorArea = () => {
           cost={
             curNextGenPrices.curNextGenPrices
               ? curNextGenPrices.curNextGenPrices[availGen.id]
+                ? formatNumber(curNextGenPrices.curNextGenPrices[availGen.id])
+                : "Loading..."
               : "Loading..."
           }
           amount={typeof curGen === "undefined" ? 0 : curGen.amount}

@@ -25,8 +25,8 @@ export const StyledDiv = styled.div`
 
 //Styled image für die Darstellung des Icons vorne
 export const IconImage = styled.img`
-  width: 2vw;
-  height: 4vh;
+  width: 12%;
+  min-width: 60px;
 `;
 
 const IconButton = ({ text, icon, cost, amount, onClick }) => {

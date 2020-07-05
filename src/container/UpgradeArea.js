@@ -150,7 +150,11 @@ const UpgradeArea = () => {
           text={upgrade.text}
           icon={upgrade.icon}
           id={upgrade.id}
-          cost={curUpg.upgrade.cost ? formatNumber(curUpg.upgrade.cost) : 0}
+          cost={
+            curUpg.upgrade.cost
+              ? formatNumber(curUpg.upgrade.cost)
+              : "Loading..."
+          }
           amount={"Aktiv"}
           onClick={() => {}}
         />
