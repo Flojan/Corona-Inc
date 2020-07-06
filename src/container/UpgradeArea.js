@@ -128,7 +128,7 @@ const UpgradeArea = () => {
           text={upgrade.text}
           icon={upgrade.icon}
           id={upgrade.id}
-          cost={availUpg.cost}
+          cost={availUpg.cost ? formatNumber(availUpg.cost) : "Loading..."}
           amount={"Inaktiv"}
           onClick={() => buyUpgrade(upgrade.id)}
         />
