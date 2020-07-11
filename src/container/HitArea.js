@@ -25,13 +25,12 @@ const HitArea = () => {
   const clicks = useStoreState((state) => state.curClicks.clicks);
   const setCPS = useStoreActions((actions) => actions.curCPS.setCurCPS);
   const cps = useStoreState((state) => state.curCPS.cps);
+  const url = `ws://server.bykovski.de:8000/game`;
 
   // token wird aus globalen State geholt
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
-    const mouseClicksWS = new WebSocket(
-      `ws://server.bykovski.de:8000/game/click?token=${token}`
-    );
+    const mouseClicksWS = new WebSocket(url + `/click?token=${token}`);
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     mouseClicksWS.onmessage = (perClick) => {
       let data = JSON.parse(perClick.data);
@@ -46,9 +45,7 @@ const HitArea = () => {
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
-    const getClicksWS = new WebSocket(
-      `ws://server.bykovski.de:8000/game/balance?token=${token}`
-    );
+    const getClicksWS = new WebSocket(url + `/balance?token=${token}`);
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     getClicksWS.onmessage = (actClicks) => {
       let data = JSON.parse(actClicks.data);
@@ -57,13 +54,11 @@ const HitArea = () => {
     return () => {
       getClicksWS.close();
     };
-  }, [token, setClicks]);
+  }, [token]);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
-    const genClicksWS = new WebSocket(
-      `ws://server.bykovski.de:8000/game/generators?token=${token}`
-    );
+    const genClicksWS = new WebSocket(url + `/generators?token=${token}`);
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     genClicksWS.onmessage = (genClicks) => {
       let data = JSON.parse(genClicks.data);
@@ -72,7 +67,7 @@ const HitArea = () => {
     return () => {
       genClicksWS.close();
     };
-  }, [token, setCPS]);
+  }, [token]);
 
   //Methode um den Hit Click zu handeln und schickt click an den WebSocket
   const onHitClick = async (event) => {
