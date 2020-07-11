@@ -1,10 +1,15 @@
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import ReactDOM from "react-dom";
+import { StoreProvider } from "easy-peasy";
+
 import Login from "./pages/Login";
 import Game from "./pages/Game";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { StoreProvider } from "easy-peasy";
 import store from "./store/Store";
 import GlobalStyle from "./globalstyles";
 

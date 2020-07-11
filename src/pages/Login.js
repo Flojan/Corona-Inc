@@ -1,6 +1,8 @@
 import React from "react";
-import LoginForm from "../components/LoginForm";
 import styled from "styled-components";
+
+import LoginForm from "../components/LoginForm";
+
 import backgroundImage from "../images/virusbackground.png";
 
 export const Container = styled.div`

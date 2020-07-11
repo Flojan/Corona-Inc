@@ -3,34 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useStoreActions } from "easy-peasy";
 import styled from "styled-components";
 
-import Button from "./Button";
-import TextInput from "./TextInput";
-import Useralert from "./Useralert";
-
-export const StyledForm = styled.form`
-  h1 {
-    color: #fff;
-  }
-  h2 {
-    color: #fff;
-  }
-  margin: 40px 0 40px 0px;
-  Useralert {
-    color: white;
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-`;
-
-const LoginForm = () => {
-  /**
-   * Erstellen der States. Damit Mail und PW gesetzt werden können und innerhalb von LoginForm
-   * immer nutzbar. Mal mit einem Default zum schnellen testen initalisiert
-   */
+const ServerClient = () => {
   const [username, setUsername] = useState("MilkBoy94");
   const [password, setPw] = useState("MilkBoy94");
   const [alertType, setAlertType] = useState(false);
@@ -106,30 +79,6 @@ const LoginForm = () => {
       setInfoAlert("Login failed");
     }
   };
-
-  return (
-    <StyledForm>
-      <h1>Play now!</h1>
-      {/* onChange um den Textinput auf änderungen abzuhören mit kurzer Arrowfunktion */}
-      <TextInput
-        type="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <TextInput
-        type="password"
-        value={password}
-        onChange={(e) => setPw(e.target.value)}
-        placeholder="Password"
-      />
-      <ButtonContainer>
-        <Button onClick={onRegisterClick}>Register</Button>
-        <Button onClick={onLoginClick}>Login</Button>
-      </ButtonContainer>
-      <Useralert type={alertType} info={infoAlert}></Useralert>
-    </StyledForm>
-  );
 };
 
-export default LoginForm;
+export default ServerClient;

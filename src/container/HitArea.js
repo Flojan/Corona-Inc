@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import HitButton from "../components/HitButton";
 import { useStoreState, useStoreActions } from "easy-peasy";
+import styled from "styled-components";
+
+import HitButton from "../components/HitButton";
 
 export const StyledDiv = styled.div`
   margin: 40px 0 40px 0px;
@@ -15,14 +16,8 @@ export const StyledDiv = styled.div`
 `;
 
 const HitArea = () => {
-  // const [count, setCount] = useState(0);
-  // const [vps, setVPS] = useState(0);
   const [cpc, setCPC] = useState(0);
   const [clickSocket, setClickSocket] = useState();
-  const [sessionClicks, setSessionClicks] = useState(1);
-  const [sessionViren, setSessionViren] = useState(cpc);
-  const [genClickSocket, setGenClickSocket] = useState();
-  const [getClickSocket, setGetClickSocket] = useState();
   const token = useStoreState((state) => state.user.token);
   const setClicks = useStoreActions(
     (actions) => actions.curClicks.setCurClicks
@@ -58,11 +53,8 @@ const HitArea = () => {
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     getClicksWS.onmessage = (actClicks) => {
       let data = JSON.parse(actClicks.data);
-      // setCount(data.points);
       setClicks(data.points);
     };
-    // Socket wird in State abgespeichert
-    setGetClickSocket(getClicksWS);
     return () => {
       getClicksWS.close();
     };
@@ -76,11 +68,8 @@ const HitArea = () => {
     // (Listener) bei einer Nachricht vom Server erhält man die gemachten Points
     genClicksWS.onmessage = (genClicks) => {
       let data = JSON.parse(genClicks.data);
-      // setVPS(data.points);
       setCPS(data.points);
     };
-    // Socket wird in State abgespeichert
-    setGenClickSocket(genClicksWS);
     return () => {
       genClicksWS.close();
     };
@@ -88,11 +77,6 @@ const HitArea = () => {
 
   //Methode um den Hit Click zu handeln und schickt click an den WebSocket
   const onHitClick = async (event) => {
-    setSessionClicks(sessionClicks + 1);
-    console.log(sessionClicks);
-    setSessionViren(cpc * sessionClicks);
-    console.log(sessionViren);
-
     clickSocket.send("click");
   };
 
@@ -103,12 +87,12 @@ const HitArea = () => {
   return (
     <StyledDiv>
       <HitButton onClick={onHitClick} />
-      <p>Viren insgesamt: {clicks ? formatNumber(clicks) : 0}</p>
-      <p>Viren pro Sekunde: {cps ? formatNumber(cps) : 0}</p>
-      <p>Viren pro Click: {cpc ? formatNumber(cpc) : 0}</p>
-      <p>
+      <p>Viren insgesamt: {clicks ? formatNumber(clicks) : "Loading..."}</p>
+      <p>Viren pro Sekunde: {cps ? formatNumber(cps) : "Loading..."}</p>
+      <p>Viren pro Click: {cpc ? formatNumber(cpc) : "Loading..."}</p>
+      {/* <p>
         Click-Viren pro Session: {sessionViren ? formatNumber(sessionViren) : 0}
-      </p>
+      </p> */}
     </StyledDiv>
   );
 };

@@ -1,11 +1,13 @@
 import React from "react";
+import { useStoreState } from "easy-peasy";
 import styled from "styled-components";
+
 import HitArea from "../container/HitArea";
+
 import containerBackground from "../images/greybackground2.png";
 import menubarBackground from "../images/coronaincbackground2.png";
 import GeneratorArea from "../container/GeneratorArea";
 import UpgradeArea from "../container/UpgradeArea";
-import { useStoreState } from "easy-peasy";
 
 export const Container = styled.div`
   background-image: url(${containerBackground});

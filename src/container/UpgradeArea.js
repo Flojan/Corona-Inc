@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useStoreState } from "easy-peasy";
+import styled from "styled-components";
+
 import clickersBackground from "../images/blackbackground.png";
 import IconButton from "../components/IconButton";
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useStoreState } from "easy-peasy";
+import styled from "styled-components";
+
 import clickersBackground from "../images/blackbackground.png";
 import IconButton from "../components/IconButton";
 
@@ -139,8 +140,6 @@ const GeneratorArea = () => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
   };
 
-  // objekt erstellen als State GenPrices =>
-
   let buttons = null;
   if (availableGens) {
     buttons = [];
@@ -149,8 +148,6 @@ const GeneratorArea = () => {
       const availGen = findAvailableGen(generator.id);
       if (!availGen) {
         continue;
-      }
-      if (curNextGenPrices.curNextGenPrices) {
       }
       buttons.push(
         <IconButton
