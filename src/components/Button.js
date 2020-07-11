@@ -18,9 +18,9 @@ export const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ id, children, onClick }) => (
-  <StyledButton id={id} onClick={onClick}>
-    {children}
+const Button = ({ children, onClick }) => (
+  <StyledButton onClick={onClick}>
+    <div>{children}</div>
   </StyledButton>
 );
 

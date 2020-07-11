@@ -17,6 +17,7 @@ const TextInput = ({ type, id, placeholder, onChange }) => (
     id={id}
     placeholder={placeholder}
     onChange={onChange}
+    autoComplete="on"
   />
 );
 

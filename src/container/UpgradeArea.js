@@ -25,10 +25,9 @@ export const StyledHeadlines = styled.h2`
 const UpgradeArea = () => {
   const upgradeUrl = "http://server.bykovski.de:8000/upgrades/";
 
-  const token = useStoreState((state) => state.user.token);
   const [curUpgrades, setCurUpgrades] = useState({});
   const [availableUpgs, setAvailableUpgs] = useState({});
-  const [curAmount, setAmount] = useState(0);
+  const token = useStoreState((state) => state.user.token);
   const curClicks = useStoreState((state) => state.curClicks.clicks);
 
   useEffect(() => {
@@ -41,7 +40,6 @@ const UpgradeArea = () => {
         }),
       });
       let data = await responseAllUpgs.json();
-      //console.log("Upgrades Data", data);
       setCurUpgrades(data);
     };
 
@@ -54,13 +52,12 @@ const UpgradeArea = () => {
         }),
       });
       let availableUpgrades = await response.json();
-      //console.log("response als .data", availableUpgrades);
       setAvailableUpgs(availableUpgrades);
     };
 
     getCurrentUpgrades();
     getAvailableUpgrades();
-  }, [curClicks]);
+  }, [curClicks, token]);
 
   const findCurUpgs = (id) => {
     if (curUpgrades && typeof curUpgrades.length !== "undefined") {
@@ -97,15 +94,12 @@ const UpgradeArea = () => {
 
   async function buyUpgrade(id) {
     const url = upgradeUrl + id + "/buy";
-    const response = await fetch(url, {
+    await fetch(url, {
       method: "GET",
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
     });
-    let data = await response.json();
-    let amount = data.amount;
-    setAmount(amount);
   }
 
   const formatNumber = (num) => {
@@ -125,6 +119,9 @@ const UpgradeArea = () => {
 
       availButtons.push(
         <IconButton
+          avail={
+            availUpg.cost ? (curClicks > availUpg.cost ? true : false) : false
+          }
           key={upgrade.id}
           text={upgrade.text}
           icon={upgrade.icon}
@@ -147,6 +144,7 @@ const UpgradeArea = () => {
 
       curButtons.push(
         <IconButton
+          avail={false}
           key={upgrade.id}
           text={upgrade.text}
           icon={upgrade.icon}

@@ -25,7 +25,6 @@ const HitArea = () => {
   const clicks = useStoreState((state) => state.curClicks.clicks);
   const setCPS = useStoreActions((actions) => actions.curCPS.setCurCPS);
   const cps = useStoreState((state) => state.curCPS.cps);
-  // const cpc = useStoreState((state) => state.curClicks.clicks);
 
   // token wird aus globalen State geholt
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
@@ -58,7 +57,7 @@ const HitArea = () => {
     return () => {
       getClicksWS.close();
     };
-  }, [token]);
+  }, [token, setClicks]);
 
   // wird erst ausgeführt wenn das Rendern der Komponente abgeschlossen ist
   useEffect(() => {
@@ -73,7 +72,7 @@ const HitArea = () => {
     return () => {
       genClicksWS.close();
     };
-  }, [token]);
+  }, [token, setCPS]);
 
   //Methode um den Hit Click zu handeln und schickt click an den WebSocket
   const onHitClick = async (event) => {
@@ -87,21 +86,11 @@ const HitArea = () => {
   return (
     <StyledDiv>
       <HitButton onClick={onHitClick} />
-      <p>Viren insgesamt: {clicks ? formatNumber(clicks) : "Loading..."}</p>
-      <p>Viren pro Sekunde: {cps ? formatNumber(cps) : "Loading..."}</p>
+      <p>Viren insgesamt: {clicks ? formatNumber(clicks) : "0"}</p>
+      <p>Viren pro Sekunde: {cps ? formatNumber(cps) : "0"}</p>
       <p>Viren pro Click: {cpc ? formatNumber(cpc) : "Loading..."}</p>
-      {/* <p>
-        Click-Viren pro Session: {sessionViren ? formatNumber(sessionViren) : 0}
-      </p> */}
     </StyledDiv>
   );
 };
 
 export default HitArea;
-
-// /* kann man öfters kaufen // Jeder Generator kann öfters gekauft werden */
-// /* und jeder einzelne erhöht seinen preis, diesen bekommt er vom Server */
-// /* /generators​/{generator_id}​/buy  */
-// /* ​/generators​/{generator_id}​/next-price  */
-// // aktuelle Balance in GlobalState
-// // Upgrades kann man nur einmal kaufen // erhöht manuelle Click Zahlen

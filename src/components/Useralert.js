@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-//Color stimmt noch nicht ganz. Braucht vermutlich eigenes Prop.
 export const StyledUseralert = styled.div`
-  background-color: ${(props) => (props.type === "true" ? "red" : "blue")};
   display: ${(props) => (props.display === "true" ? "block" : "none")};
+  background-color: red;
   border: none;
   color: white;
   margin-left: 50px;

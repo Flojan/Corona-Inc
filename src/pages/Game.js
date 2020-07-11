@@ -30,7 +30,6 @@ export const MenuBar = styled.div`
 
 const Game = () => {
   const username = useStoreState((state) => state.curUsername.username);
-  console.log("USERNAME", username);
   if (!username) {
     return null;
   }

@@ -33,11 +33,19 @@ const curUsernameModel = {
   }),
 };
 
+const curPasswordModel = {
+  password: "",
+  setCurPassword: action((state, password) => {
+    state.password = password;
+  }),
+};
+
 const storeModel = {
   user: userModel,
   curClicks: curClicksModel,
   curCPS: curCPSModel,
-  curUsername: curUsernameModel
+  curUsername: curUsernameModel,
+  curPassword: curPasswordModel,
 };
 
 export default storeModel;

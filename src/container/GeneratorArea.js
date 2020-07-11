@@ -27,11 +27,10 @@ const GeneratorArea = () => {
   const token = useStoreState((state) => state.user.token);
   const [curGenerators, setCurGenerators] = useState({});
   const [availableGens, setAvailableGens] = useState({});
+  const [curNextGenPrices, setNextGenPrices] = useState({});
   const [curGensLoading, setCurGensLoading] = useState(true);
   const [availGensLoading, setAvailGensLoading] = useState(true);
-  const [curNextGenPrices, setNextGenPrices] = useState({});
   const curClicks = useStoreState((state) => state.curClicks.clicks);
-  const curCPS = useStoreState((state) => state.curCPS.cps);
 
   useEffect(() => {
     const getCurrentGenerators = async () => {
@@ -60,7 +59,6 @@ const GeneratorArea = () => {
       setAvailGensLoading(false);
     };
 
-    // von curGen auf availGen ändern
     const getNextGenPrices = async () => {
       if (availableGens && !availGensLoading) {
         for (const generator of availableGens) {
@@ -73,7 +71,6 @@ const GeneratorArea = () => {
           });
 
           const nextPrice = await responseNextPrice.json();
-
           setNextGenPrices((prevState) => ({
             curNextGenPrices: {
               ...prevState.curNextGenPrices,
@@ -127,13 +124,12 @@ const GeneratorArea = () => {
 
   async function buyGenerator(id) {
     const url = generatorUrl + id + "/buy";
-    const response = await fetch(url, {
+    await fetch(url, {
       method: "GET",
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
     });
-    let data = await response.json();
   }
 
   const formatNumber = (num) => {
@@ -151,6 +147,13 @@ const GeneratorArea = () => {
       }
       buttons.push(
         <IconButton
+          avail={
+            curNextGenPrices.curNextGenPrices
+              ? curClicks > curNextGenPrices.curNextGenPrices[availGen.id]
+                ? true
+                : false
+              : false
+          }
           key={generator.id}
           text={generator.text}
           icon={generator.icon}
