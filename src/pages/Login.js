@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import LoginForm from "../components/LoginForm";
 
+import { sendRegister } from "../client/client";
+
 import backgroundImage from "../images/virusbackground.png";
 
 export const Container = styled.div`
@@ -27,6 +29,7 @@ export const FormContainer = styled.div`
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 `;
+const response = await sendRegister(user);
 
 const Login = () => {
   return (
